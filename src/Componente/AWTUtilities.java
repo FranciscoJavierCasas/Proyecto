@@ -6,6 +6,7 @@
 package Componente;
 
 import java.awt.Window;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
@@ -22,7 +23,7 @@ public class AWTUtilities {
                 Method method = awtUtilsClass.getMethod("setWindowOpaque", Window.class, boolean.class);
                 method.invoke(null, window, opaque);
             }
-        } catch (Exception exp) {
+        } catch (ClassNotFoundException | IllegalAccessException | IllegalArgumentException | NoSuchMethodException | SecurityException | InvocationTargetException exp) {
         }
     }
     
@@ -34,7 +35,7 @@ public class AWTUtilities {
                 Method method = awtUtilsClass.getMethod("setWindowOpacity", Window.class, float.class);
                 method.invoke(null, window, opacidad);
             }
-        } catch (Exception exp) {
+        } catch (ClassNotFoundException | IllegalAccessException | IllegalArgumentException | NoSuchMethodException | SecurityException | InvocationTargetException exp) {
         }
     }
 }

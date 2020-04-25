@@ -14,14 +14,15 @@ import javax.swing.JFrame;
  *
  * @author Francisco
  */
+@SuppressWarnings("unchecked")
 public class jBlocked {
      private JFrame jframe=null;
     /**
  
      * Constructor de clase
- 
+     * @param f 
      */
- 
+    @SuppressWarnings("unchecked")
     public jBlocked( JFrame f )
     {
         this.jframe = f;
@@ -36,21 +37,22 @@ public class jBlocked {
      * de la aplicación, cada 50 milisegundos se envia el JFrame al frente y se cambia su propiedad a maximizado
  
      */
- 
+    @SuppressWarnings("unchecked")
     public void block()
     {
         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor(); 
         scheduler.scheduleAtFixedRate( 
- 
+                
             new Runnable() 
             {
+                @SuppressWarnings("unchecked")
                 @Override
                 public void run() {                   
                     front(); 
                 }
               }, 500, 50 , TimeUnit.MILLISECONDS ); //comienza dentro de 1/2 segundo y luego se repite cada N segundos
     }
- 
+    @SuppressWarnings("unchecked")
     public void front()
     {
         jframe.setExtendedState( JFrame.MAXIMIZED_BOTH );//maximizado 

@@ -98,6 +98,7 @@ public class ConexionBase {
            
     }
 /////////////////////////Docente////////////////////////////////    
+   @SuppressWarnings("unchecked") 
    public static ArrayList<Docente> getDocente(String consulta)
     {
         ArrayList<Docente> Docente = new ArrayList<Docente>();
@@ -128,7 +129,7 @@ public class ConexionBase {
         
         return Docente;
     }
-   
+   @SuppressWarnings("unchecked") 
    public static int grabarDocente(Docente cl)
     {
         int rsu = 0;
@@ -158,7 +159,7 @@ public class ConexionBase {
         return rsu;
         
     }
-   
+   @SuppressWarnings("unchecked") 
    public static int actualizarDocente(Docente cl)
     {
         int rsu = 0;
@@ -191,7 +192,7 @@ public class ConexionBase {
         return rsu;
         
     }
-   
+   @SuppressWarnings("unchecked") 
    public static int eliminarDocente(Integer pk)
     {
         int rsu = 0;
@@ -208,7 +209,7 @@ public class ConexionBase {
         return rsu;
         
     }
-   
+     @SuppressWarnings("unchecked") 
      public static CustomImageIcon getFoto(int id)
     {
         String sql = "select Foto from docente where IdDocente = "+id;
@@ -257,7 +258,7 @@ public class ConexionBase {
 //        return emailEncontrado;
 //        
 //    }
-     
+   @SuppressWarnings("unchecked")   
    public static ArrayList<Estudiante> getEstudiante(String consulta)
     {
         ArrayList<Estudiante> Estudiante = new ArrayList<Estudiante>();
@@ -289,6 +290,7 @@ public class ConexionBase {
         
         return Estudiante;
     }
+   @SuppressWarnings("unchecked") 
     public static int grabarEstudiante(Estudiante cl)
     {
         int rsu = 0;
@@ -320,7 +322,7 @@ public class ConexionBase {
         return rsu;
         
     }
-    
+    @SuppressWarnings("unchecked") 
       public static int actualizarEstudiante(Estudiante cl)
     {
         int rsu = 0;
@@ -355,6 +357,7 @@ public class ConexionBase {
         return rsu;
         
     }
+     @SuppressWarnings("unchecked")  
      public static int eliminarEstudiante(Integer pk)
     {
         int rsu = 0;
@@ -371,7 +374,7 @@ public class ConexionBase {
         return rsu;
         
     }
-   
+   @SuppressWarnings("unchecked") 
      public static CustomImageIcon getFoto2(int id)
     {
         String sql = "select Foto from registro where IdEstudiante = "+id;

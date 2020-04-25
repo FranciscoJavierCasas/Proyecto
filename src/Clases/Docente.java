@@ -7,6 +7,7 @@ import java.io.InputStream;
  *
  * @author El APRENDIZ www.elaprendiz.net63.net
  */
+@SuppressWarnings("unchecked")
 public class Docente {
     
     /**
@@ -55,7 +56,7 @@ public class Docente {
     private String TipoUsuario;
     private String Password;
     private InputStream Foto;
-
+    @SuppressWarnings("unchecked")
     public Docente(Integer primaryKey, String DocumentoIdentidad, String Nombres, String Apellidos, String Email, String Genero, String TipoUsuario, String Password, FileInputStream Foto) {
         this.primaryKey = primaryKey;
         this.DocumentoIdentidad = DocumentoIdentidad;
@@ -67,7 +68,7 @@ public class Docente {
         this.Password = Password;
         this.Foto = Foto;
     }
-    
+    @SuppressWarnings("unchecked")
       public Docente(String DocumentoIdentidad, String Nombres, String Apellidos, String Email, String Genero, String TipoUsuario, String Password, FileInputStream Foto) {
         this.DocumentoIdentidad = DocumentoIdentidad;
         this.Nombres = Nombres;
@@ -154,19 +155,19 @@ public class Docente {
     public void setFoto(InputStream Foto) {
         this.Foto = Foto;
     }
-
+    @SuppressWarnings("unchecked")
     @Override
     public String toString() {
         return Nombres + Apellidos;
     }
-
+    @SuppressWarnings("unchecked")
     @Override
     public int hashCode() {
         int hash = 3;
         hash = 67 * hash + (this.primaryKey != null ? this.primaryKey.hashCode() : 0);
         return hash;
     }
-
+    @SuppressWarnings("unchecked")
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {

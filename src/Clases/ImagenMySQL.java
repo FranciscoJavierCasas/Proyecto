@@ -3,7 +3,7 @@ package Clases;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-
+@SuppressWarnings("unchecked")
 public class ImagenMySQL extends javax.swing.JPanel {
 
     BufferedImage ruta;
@@ -14,6 +14,8 @@ public class ImagenMySQL extends javax.swing.JPanel {
     }
 
 //Se crea un método cuyo parámetro debe ser un objeto Graphics
+    @SuppressWarnings("unchecked")
+    @Override
     public void paint(Graphics grafico) {
         Dimension height = getSize();
 

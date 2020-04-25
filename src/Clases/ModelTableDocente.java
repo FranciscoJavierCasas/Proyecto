@@ -2,12 +2,12 @@ package Clases;
 
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
-import Clases.Docente;
 
 /**
  *
- * @author El APRENDIZ www.elaprendiz.net63.net
+ * @author 
  */
+@SuppressWarnings("unchecked")
 public class ModelTableDocente extends AbstractTableModel{
     
     private String[] nombreColumnas = {"Documento Identidad","Nombres","Apellidos","Email","Genero","Tipo Usuario"};
@@ -23,17 +23,17 @@ public class ModelTableDocente extends AbstractTableModel{
     public void setDocente(ArrayList<Docente> cls) {
         this.cls = cls;
     }
-    
+    @SuppressWarnings("unchecked")
     @Override
     public int getRowCount() {
         return cls.size();
     }
-
+    @SuppressWarnings("unchecked")
     @Override
     public int getColumnCount() {
         return nombreColumnas.length;
     }
-
+    @SuppressWarnings("unchecked")
     @Override
     public String getColumnName(int column) {
         return nombreColumnas[column];
@@ -43,7 +43,7 @@ public class ModelTableDocente extends AbstractTableModel{
     {
         return cls.get(index);
     }
-    
+    @SuppressWarnings("unchecked")
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch(columnIndex)

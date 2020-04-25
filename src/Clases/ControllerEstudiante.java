@@ -12,6 +12,7 @@ import java.util.ArrayList;
  *
  * @author Francisco
  */
+@SuppressWarnings("unchecked")
 public class ControllerEstudiante {
        public ArrayList<Estudiante> getEstudiante()
      {

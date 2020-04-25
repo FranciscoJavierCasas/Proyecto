@@ -9,6 +9,7 @@ import java.util.ArrayList;
  *
  * @author El APRENDIZ www.elaprendiz.net63.net
  */
+@SuppressWarnings("unchecked")
 public class ControllerDocente {
     
      public ArrayList<Docente> getDocente()

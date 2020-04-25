@@ -68,6 +68,7 @@ public class InterfazInicio extends javax.swing.JFrame {
     /**
      * Creates new form InterfazInicio
      */
+    @SuppressWarnings("unchecked") 
     public InterfazInicio() {
         initComponents();
         this.setLocationRelativeTo(null);

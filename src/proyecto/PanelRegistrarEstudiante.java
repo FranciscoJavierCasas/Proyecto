@@ -36,6 +36,7 @@ import rojerusan.RSNotifyAnimated;
  *
  * @author Francisco
  */
+@SuppressWarnings("unchecked")
 public class PanelRegistrarEstudiante extends javax.swing.JPanel{
     DefaultTableModel modelo;
     InterfazInicio inicio;
@@ -57,8 +58,9 @@ public class PanelRegistrarEstudiante extends javax.swing.JPanel{
 
     /**
      * Creates new form PanelRegistrar
+     * @param n
      */
-
+    @SuppressWarnings("unchecked")
     public PanelRegistrarEstudiante(InterfazInicio n) {
         initComponents();
         inicio = n;
@@ -148,7 +150,7 @@ public class PanelRegistrarEstudiante extends javax.swing.JPanel{
         this.JTableRegistro.clearSelection();
         
     }
-   
+   @SuppressWarnings("unchecked")
    void mostrarusuarios(String valor){
    String mostrar="SELECT * FROM registro WHERE CONCAT(Codigo,CodigoPlan,DocumentoIdentidad,Nombres,Apellidos,Email,Genero,TipoUsuario,Password,Foto) LIKE '%"+valor+"%'";    
    String [] titulos= {"Codigo","Codigo Plan","Documento Identidad","Nombres","Apellidos","Email","Genero","Tipo Usuario"};
@@ -179,8 +181,6 @@ public class PanelRegistrarEstudiante extends javax.swing.JPanel{
              JOptionPane.showMessageDialog(this,e);
 
         }
-  
-  
    }
 
     /**
@@ -571,7 +571,7 @@ public class PanelRegistrarEstudiante extends javax.swing.JPanel{
                  if(fis != null)
                     fis.close();
                  fis = null;
-            } catch (Exception e) {
+            } catch (IOException e) {
              JOptionPane.showMessageDialog(this,e);
         }
          }

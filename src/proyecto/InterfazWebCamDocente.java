@@ -40,7 +40,7 @@ public final class InterfazWebCamDocente extends javax.swing.JFrame {
     Icon iconoFoto = null;
     PanelAjustesDocente d = null;
 
-
+    @SuppressWarnings("unchecked") 
     public InterfazWebCamDocente(PanelAjustesDocente foto) {
         initComponents();
         ////////////////////////////////////////
@@ -234,6 +234,7 @@ public final class InterfazWebCamDocente extends javax.swing.JFrame {
         // TODO add your handling code here:}
 //        textoBotonesModificados();
         Thread hilo = new Thread(){
+            @SuppressWarnings("unchecked") 
             @Override
             public void run(){
                 webcamPanel.start();

@@ -20,6 +20,7 @@ public class PanelOpcionesConsulta extends javax.swing.JPanel {
 
     /**
      * Creates new form PanelMonitor
+     * @param n
      */
         public PanelOpcionesConsulta(InterfazInicio n) {
         initComponents();

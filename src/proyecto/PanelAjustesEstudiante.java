@@ -80,7 +80,7 @@ public class PanelAjustesEstudiante extends javax.swing.JPanel {
     public void setJLFoto(JLabel JLFoto) {
         this.JLFoto = JLFoto;
     }
-
+    @SuppressWarnings("unchecked")
     public PanelAjustesEstudiante(InterfazInicio n) {
         initComponents();
         inicio = n;
@@ -91,6 +91,7 @@ public class PanelAjustesEstudiante extends javax.swing.JPanel {
 
 cc = new ControllerEstudiante();
     }
+    @SuppressWarnings("unchecked")
     public void configuracion(String usuario, String plan, String pass, int tipoUsuario){
         this.tipoUsuario = tipoUsuario;
         this.usuario = usuario;
@@ -161,15 +162,14 @@ cc = new ControllerEstudiante();
                 if(isdatos!=null){
                     isdatos.close();
                 }
-            } catch (SQLException ex) {
-                Logger.getLogger(PanelAjustesEstudiante.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
+            } catch (SQLException | IOException ex) {
                 Logger.getLogger(PanelAjustesEstudiante.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
             
 ///////////////////////////////////////////////////////////////////////////////       
     }
+    @SuppressWarnings({"unchecked", "empty-statement"})
       public void actualizar(String usuario, String plan, String pass, int tipoUsuario) throws SQLException, IOException{
         this.tipoUsuario = tipoUsuario;
         PreparedStatement ps = null;
@@ -191,7 +191,7 @@ cc = new ControllerEstudiante();
 
             ps = (PreparedStatement) cn.prepareStatement(SQL);
             
-            ps.setString(1, JPassword.getText());
+            ps.setString(1, String.valueOf(JPassword.getPassword()));
             ps.setBytes(2, imgByte);
 
             int res = ps.executeUpdate();
@@ -212,10 +212,9 @@ cc = new ControllerEstudiante();
 
             }
 
-        }catch (Exception e){
+        }catch (IOException | SQLException e){
 //            System.out.print(fis+" error");
-            e.printStackTrace();
-            System.out.print(e.getMessage());
+                System.out.print(e.getMessage());
         }
         finally{
             if (fis != null){
@@ -378,7 +377,7 @@ cc = new ControllerEstudiante();
             PanelPrincipal.repaint();
         }
     }//GEN-LAST:event_BtnAtras1ActionPerformed
-
+    @SuppressWarnings("unchecked")
     private void BtnActualizar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnActualizar2ActionPerformed
         try {
 
@@ -392,7 +391,7 @@ actualizar(usuario, plan, pass, tipoUsuario);
 
 
     }//GEN-LAST:event_BtnActualizar2ActionPerformed
-
+    @SuppressWarnings("unchecked")
     private void BtnCargarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCargarFotoActionPerformed
         // TODO add your handling code here:
         JFileChooser se = new JFileChooser();
@@ -418,7 +417,7 @@ actualizar(usuario, plan, pass, tipoUsuario);
         }
        
     }//GEN-LAST:event_BtnCargarFotoActionPerformed
-
+    @SuppressWarnings("unchecked")
     private void RevelarContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RevelarContraseñaActionPerformed
         // TODO add your handling code here:
 
@@ -431,7 +430,7 @@ actualizar(usuario, plan, pass, tipoUsuario);
             JPassword.setEchoChar(('*'));
         }
     }//GEN-LAST:event_RevelarContraseñaActionPerformed
-
+    @SuppressWarnings("unchecked")
     private void BtnCamaraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCamaraActionPerformed
         // TODO add your handling code here:
         InterfazWebCam interfazwebcam = new InterfazWebCam(this);
@@ -454,18 +453,5 @@ actualizar(usuario, plan, pass, tipoUsuario);
 conectar cc2= new conectar();
 java.sql.Connection cn= cc2.conexion();
 
-    private boolean validacion() {
-        boolean result = true;
 
-        try {
-        if (JPassword.getText().trim().equals("")){
-            JOptionPane.showMessageDialog(this,"Campo Contraseña Vacia");
-            result = false;
-        
-        }
-        } catch(Exception e){
-            e.printStackTrace();
-        }
-        return result;
-}
 }

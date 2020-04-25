@@ -40,7 +40,7 @@ public final class InterfazWebCam extends javax.swing.JFrame {
     Icon iconoFoto = null;
     PanelAjustesEstudiante f = null;
 
-
+    @SuppressWarnings("unchecked")
     public InterfazWebCam(PanelAjustesEstudiante foto) {
         initComponents();
         ////////////////////////////////////////

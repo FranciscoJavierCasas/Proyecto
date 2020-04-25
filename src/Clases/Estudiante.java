@@ -12,6 +12,7 @@ import java.io.InputStream;
  *
  * @author Francisco
  */
+@SuppressWarnings("unchecked")
 public class Estudiante {
     public static String SELECT_ALL = "SELECT * FROM registro";
     
@@ -62,7 +63,7 @@ public class Estudiante {
     private String TipoUsuario;
     private String Password;
     private InputStream Foto;
-
+@SuppressWarnings("unchecked")
     public Estudiante(Integer primaryKey, String Codigo, String CodigoPlan, String DocumentoIdentidad, String Nombres, String Apellidos, String Email, String Genero, String TipoUsuario, String Password, FileInputStream Foto) {
         
         this.primaryKey = primaryKey;
@@ -77,7 +78,7 @@ public class Estudiante {
         this.Password = Password;
         this.Foto = Foto;
     }
-    
+    @SuppressWarnings("unchecked")
       public Estudiante(String Codigo, String CodigoPlan, String DocumentoIdentidad, String Nombres, String Apellidos, String Email, String Genero, String TipoUsuario, String Password, FileInputStream Foto) {
         this.Codigo = Codigo;
         this.CodigoPlan = CodigoPlan;
@@ -180,19 +181,19 @@ public class Estudiante {
     public void setFoto2(InputStream Foto) {
         this.Foto = Foto;
     }
-
+    @SuppressWarnings("unchecked")
     @Override
     public String toString() {
         return Nombres + Apellidos;
     }
-
+    @SuppressWarnings("unchecked")
     @Override
     public int hashCode() {
         int hash = 3;
         hash = 67 * hash + (this.primaryKey != null ? this.primaryKey.hashCode() : 0);
         return hash;
     }
-
+    @SuppressWarnings("unchecked")
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {

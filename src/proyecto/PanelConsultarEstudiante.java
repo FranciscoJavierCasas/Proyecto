@@ -21,6 +21,7 @@ import static proyecto.InterfazInicio.PanelPrincipal;
  *
  * @author Francisco
  */
+@SuppressWarnings("unchecked")
 public class PanelConsultarEstudiante extends javax.swing.JPanel {
     DefaultTableModel modelo;
     InterfazInicio inicio;
@@ -28,7 +29,9 @@ public class PanelConsultarEstudiante extends javax.swing.JPanel {
 
     /**
      * Creates new form PanelConsultar
+     * @param n
      */
+    @SuppressWarnings("unchecked")
     public PanelConsultarEstudiante(InterfazInicio n) {
         
         initComponents();
@@ -48,8 +51,8 @@ public class PanelConsultarEstudiante extends javax.swing.JPanel {
         JTableRegistro.getColumn("Email").setPreferredWidth(110);
         
     }
-
-     void mostrarusuarios(String valor){
+   @SuppressWarnings("unchecked")
+   void  mostrarusuarios(String valor){
    String mostrar="SELECT * FROM registro WHERE CONCAT(IdEstudiante,Codigo,CodigoPlan,DocumentoIdentidad,Nombres,Apellidos,Email,Genero,TipoUsuario,Password,Foto) LIKE '%"+valor+"%'";    
    String [] titulos= {"Codigo","Codigo Plan","Documento Identidad","Nombres","Apellidos","Email","Genero","Tipo Usuario"};
    modelo=new  DefaultTableModel(null,titulos);   
@@ -75,7 +78,7 @@ public class PanelConsultarEstudiante extends javax.swing.JPanel {
                 modelo.addRow(datos);
             }
             JTableRegistro.setModel(modelo);
-       } catch (Exception e) {
+       } catch (SQLException e) {
              JOptionPane.showMessageDialog(this,e);
 
         }

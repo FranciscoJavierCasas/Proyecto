@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -22,6 +23,7 @@ import rojerusan.RSNotifyAnimated;
  *
  * @author Francisco
  */
+@SuppressWarnings("unchecked")
 public class InterfazSesion extends javax.swing.JFrame {
      public static String Usuario;
      InterfazInicio inicio;
@@ -31,14 +33,14 @@ public class InterfazSesion extends javax.swing.JFrame {
      * Creates new form InterfazSesion
      * @param n
      */
-  
+  @SuppressWarnings("unchecked")
     public InterfazSesion(InterfazInicio n) {
         initComponents();
         this.setResizable(false);
         iniciar(n);
        
     }
-
+    @SuppressWarnings("unchecked")
     private void iniciar(InterfazInicio n){
         inicio = n;
         // Capturo el valor de TxtUsuario, de la InterfazInicio
@@ -57,9 +59,10 @@ public class InterfazSesion extends javax.swing.JFrame {
         tiempo.start();
     }
 
-   
+   @SuppressWarnings("unchecked")
     class horas implements ActionListener{
-    
+        @SuppressWarnings("unchecked")
+        @Override
         public void actionPerformed(ActionEvent e){
             Date sistHora=new Date();
             String pmAm="hh:mm:ss a";
@@ -73,8 +76,8 @@ public class InterfazSesion extends javax.swing.JFrame {
     //VARIABLES DE CRONOMETRO
     private Timer t;
     private int h, m, s, cs;
-    private ActionListener acciones = new ActionListener(){
-
+    private final ActionListener acciones = new ActionListener(){
+        @SuppressWarnings("unchecked")
         @Override
         public void actionPerformed(ActionEvent ae) {
             ++s;
@@ -94,6 +97,8 @@ public class InterfazSesion extends javax.swing.JFrame {
     };
     
 class hiloEspera extends Thread{
+@SuppressWarnings("unchecked")    
+@Override
 public void run(){
 int segundosRestantes= 10;
 
@@ -111,6 +116,7 @@ while(segundosRestantes> 0){
  
 }
 }
+@SuppressWarnings("unchecked")
 void guardar(){
             String ins=("INSERT INTO reportes (Usuario, HoraInicio, Fecha, Tiempo) VALUES(?,?,?,?)");
         try {
@@ -122,12 +128,12 @@ void guardar(){
             pst.executeUpdate();
             
            
-        } catch (Exception e) {
+        } catch (SQLException e) {
              JOptionPane.showMessageDialog(this,"No se encuentra ningun dato");
         }
     
 }
-   
+    @SuppressWarnings("unchecked")  
     private void actualizarLabel() {
         try{
         tiempo = (h<=9?"0":"")+h+":"+(m<=9?"0":"")+m+":"+(s<=9?"0":"")+s;

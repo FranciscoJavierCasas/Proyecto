@@ -27,7 +27,9 @@ public class PanelConsultarDocente extends javax.swing.JPanel {
 
     /**
      * Creates new form PanelConsultar
+     * @param n
      */
+    @SuppressWarnings("unchecked")
     public PanelConsultarDocente(InterfazInicio n) {
         
         initComponents();
@@ -41,6 +43,7 @@ public class PanelConsultarDocente extends javax.swing.JPanel {
         JTableDocente.setRowHeight(25);
         
     }
+    @SuppressWarnings("unchecked")
      void mostrarusuarios(String valor){
    String mostrar="SELECT * FROM docente WHERE CONCAT(IdDocente,DocumentoIdentidad,Nombres,Apellidos,Email,Genero,TipoUsuario,Password,Foto) LIKE '%"+valor+"%'";    
    String [] titulos= {"Documento Identidad","Nombres","Apellidos","Email","Genero","Tipo Usuario"};
@@ -66,7 +69,7 @@ public class PanelConsultarDocente extends javax.swing.JPanel {
                 modelo.addRow(datos);
             }
             JTableDocente.setModel(modelo);
-       } catch (Exception e) {
+       } catch (SQLException e) {
              JOptionPane.showMessageDialog(this,e);
 
         }

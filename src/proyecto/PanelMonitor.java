@@ -20,6 +20,7 @@ PanelAjustesEstudiante a1 = null;
 PanelReporte pr = null;
     /**
      * Creates new form PanelMonitor
+     * @param n
      */
 
     public PanelMonitor(InterfazInicio n) {

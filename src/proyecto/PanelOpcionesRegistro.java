@@ -20,6 +20,7 @@ PanelRegistrarEstudiante p3 = null;
 
     /**
      * Creates new form PanelMonitor
+     * @param n
      */
 public PanelOpcionesRegistro(InterfazInicio n) {
         initComponents();

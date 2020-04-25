@@ -33,6 +33,7 @@ import rojerusan.RSNotifyAnimated;
  *
  * @author Francisco
  */
+@SuppressWarnings("unchecked")
 public class PanelRegistrarDocente extends javax.swing.JPanel {
 DefaultTableModel modelo;
 InterfazInicio inicio;
@@ -48,8 +49,9 @@ boolean b = true;
     
     /**
      * Creates new form PanelRegistrar
+     * @param n
      */
-
+    @SuppressWarnings("unchecked")
     public PanelRegistrarDocente(InterfazInicio n) {
         initComponents();
         bloquear();
@@ -71,7 +73,8 @@ boolean b = true;
         RevelarContraseña.setVisible(false);
  
     }
-     void mostrarusuarios(String valor){
+    @SuppressWarnings("unchecked")
+    void mostrarusuarios(String valor){
          
    String mostrar="SELECT * FROM docente WHERE CONCAT(DocumentoIdentidad,Nombres,Apellidos,Email,Genero,TipoUsuario,Password,Foto) LIKE '%"+valor+"%'";    
    String [] titulos= {"Documento Identidad","Nombres","Apellidos","Email","Genero","Tipo Usuario"};

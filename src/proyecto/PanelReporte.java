@@ -24,6 +24,7 @@ import net.sf.jasperreports.view.JasperViewer;
  *
  * @author Francisco
  */
+@SuppressWarnings("unchecked")
 public class PanelReporte extends javax.swing.JPanel {
     InterfazInicio inicio;
     PanelMonitor p1 = null;
@@ -37,12 +38,14 @@ public class PanelReporte extends javax.swing.JPanel {
      * Creates new form PanelReporte
      * @param n
      */
+    @SuppressWarnings("unchecked")
      public PanelReporte(InterfazInicio n) {
         initComponents();
         inicio = n;
 //
 
     }
+    @SuppressWarnings("unchecked") 
     public PanelReporte() {
         initComponents();
 //        conexion = new ConexionBase();
@@ -113,7 +116,7 @@ public class PanelReporte extends javax.swing.JPanel {
       
     }
         @SuppressWarnings("unchecked")
-        void GenerarReporteEstudianteBusqueda(String usuario){
+        void GenerarReporteEstudianteBusqueda(){
             try {
             conectar con = new conectar();
             Connection conn = con.conexion();
@@ -125,6 +128,7 @@ public class PanelReporte extends javax.swing.JPanel {
            
              Map parametro = new HashMap();
              parametro.put("codigo", TxtCodigo.getText());
+             parametro.put("CodigoPlan", TxtCodigo.getText());
 
             reporte = (JasperReport) JRLoader.loadObjectFromFile(path);
             
@@ -343,7 +347,7 @@ public class PanelReporte extends javax.swing.JPanel {
     private void JlReporteUsoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JlReporteUsoMouseClicked
         // TODO add your handling code here:
         GenerarReporte();
-
+     
     }//GEN-LAST:event_JlReporteUsoMouseClicked
 
     private void JlReporteUsoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JlReporteUsoMouseExited
@@ -354,7 +358,7 @@ public class PanelReporte extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
 
-        GenerarReporteEstudianteBusqueda(usuario);
+        GenerarReporteEstudianteBusqueda();
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

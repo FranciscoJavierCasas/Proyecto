@@ -6,8 +6,6 @@
 package proyecto;
 
 import java.awt.BorderLayout;
-import static java.awt.Frame.ICONIFIED;
-import javax.swing.JFrame;
 import static proyecto.InterfazInicio.PanelPrincipal;
 
 /**

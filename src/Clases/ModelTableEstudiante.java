@@ -12,8 +12,9 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Francisco
  */
+@SuppressWarnings("unchecked")
 public class ModelTableEstudiante extends AbstractTableModel {
-    
+  
     private String[] nombreColumnas = {"Codigo","Codigo Plan","Documento Identidad","Nombres","Apellidos","Email","Genero","Tipo Usuario"};
     private ArrayList<Estudiante> cls;
     
@@ -27,17 +28,17 @@ public class ModelTableEstudiante extends AbstractTableModel {
     public void setEstudiante(ArrayList<Estudiante> cls) {
         this.cls = cls;
     }
-
+    @SuppressWarnings("unchecked")
      @Override
     public int getRowCount() {
         return cls.size();
     }
-
+    @SuppressWarnings("unchecked")
     @Override
     public int getColumnCount() {
         return nombreColumnas.length;
     }
-
+    @SuppressWarnings("unchecked")
     @Override
     public String getColumnName(int column) {
         return nombreColumnas[column];
@@ -47,8 +48,8 @@ public class ModelTableEstudiante extends AbstractTableModel {
     {
         return cls.get(index);
     }
-    
-      @Override
+    @SuppressWarnings("unchecked")
+    @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch(columnIndex)
         {

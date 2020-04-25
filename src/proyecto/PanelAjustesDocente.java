@@ -30,7 +30,6 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import static proyecto.InterfazInicio.PanelPrincipal;
 import rojerusan.RSNotifyAnimated;
 
@@ -62,6 +61,7 @@ public class PanelAjustesDocente extends javax.swing.JPanel {
    
     /**
      * Creates new form PanelAjustesEstudiante
+     * @return 
      */
     public BufferedImage getFotoCamara() {
         return fotoCamara;
@@ -79,7 +79,7 @@ public class PanelAjustesDocente extends javax.swing.JPanel {
         this.JLFoto = JLFoto;
     }
     
-    
+    @SuppressWarnings("unchecked")
     public PanelAjustesDocente(InterfazInicio n) {
         initComponents();
         inicio = n;
@@ -92,6 +92,7 @@ public class PanelAjustesDocente extends javax.swing.JPanel {
         
       
     }
+    @SuppressWarnings("unchecked")
     public void configuracionDocente(String usuario, String pass, int tipoDocente){
          this.tipoDocente = tipoDocente;
          this.usuario = usuario;
@@ -159,15 +160,14 @@ public class PanelAjustesDocente extends javax.swing.JPanel {
                 if(isdatos!=null){
                     isdatos.close();
                 }
-            } catch (SQLException ex) {
-                Logger.getLogger(PanelAjustesDocente.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
+            } catch (SQLException | IOException ex) {
                 Logger.getLogger(PanelAjustesDocente.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
             
 //       
     }
+    @SuppressWarnings("unchecked")
      public void actualizar(String usuario, String pass, int tipoDocente) throws IOException{
         this.tipoDocente = tipoDocente; 
         PreparedStatement ps = null;
@@ -217,10 +217,9 @@ public class PanelAjustesDocente extends javax.swing.JPanel {
 
             }
 
-        }catch (Exception e){
+        }catch (IOException | SQLException e){
 //            System.out.print(fis+" error");
-            e.printStackTrace();
-            System.out.print(e.getMessage());
+              System.out.print(e.getMessage());
         }
         finally{
             if (fis != null){
@@ -376,7 +375,7 @@ public class PanelAjustesDocente extends javax.swing.JPanel {
             
         }
     }//GEN-LAST:event_BtnAtras1ActionPerformed
-
+    @SuppressWarnings("unchecked")
     private void BtnActualizar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnActualizar2ActionPerformed
        
         try {
@@ -387,7 +386,7 @@ public class PanelAjustesDocente extends javax.swing.JPanel {
         inicio.CargarFotoDocente(usuario, pass);
 
     }//GEN-LAST:event_BtnActualizar2ActionPerformed
-
+    @SuppressWarnings("unchecked")
     private void BtnCargarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCargarFotoActionPerformed
         // TODO add your handling code here:
         JFileChooser se = new JFileChooser();
@@ -409,7 +408,7 @@ public class PanelAjustesDocente extends javax.swing.JPanel {
         }
        
     }//GEN-LAST:event_BtnCargarFotoActionPerformed
-
+    @SuppressWarnings("unchecked")
     private void RevelarContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RevelarContraseñaActionPerformed
         // TODO add your handling code here:
 
