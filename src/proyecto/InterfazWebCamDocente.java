@@ -22,7 +22,7 @@ import javax.swing.ImageIcon;
  *
  * @author Francisco
  */
-public final class InterfazWebCamDocente extends javax.swing.JFrame {
+public final class InterfazWebCam extends javax.swing.JFrame {
 
     /**
      * Creates new form InterfazWebCam
@@ -38,16 +38,16 @@ public final class InterfazWebCamDocente extends javax.swing.JFrame {
     BufferedImage ruta;
     int contador = 0;
     Icon iconoFoto = null;
-    PanelAjustesDocente d = null;
+    PanelAjustesEstudiante f = null;
 
-    @SuppressWarnings("unchecked") 
-    public InterfazWebCamDocente(PanelAjustesDocente foto) {
+    @SuppressWarnings("unchecked")
+    public InterfazWebCam(PanelAjustesEstudiante foto) {
         initComponents();
         ////////////////////////////////////////
         jLabel1.setBackground(Color.gray);
         jLabel1.setOpaque(true);
         /////////////////////////////////////
-        d = foto;
+        f = foto;
         setLocationRelativeTo(null);
         webcam.setViewSize(dimension1);
         webcamPanel.setFitArea(true);
@@ -232,14 +232,14 @@ public final class InterfazWebCamDocente extends javax.swing.JFrame {
 
     private void BtnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnIniciarActionPerformed
         // TODO add your handling code here:}
-//        textoBotonesModificados();
+
         Thread hilo = new Thread(){
-            @SuppressWarnings("unchecked") 
+            @SuppressWarnings("unchecked")
             @Override
             public void run(){
                 webcamPanel.start();
                 prenderBotones();
-//                textoBotonesOriginales();
+
             }
         };
         hilo.setDaemon(true);
@@ -276,8 +276,8 @@ public final class InterfazWebCamDocente extends javax.swing.JFrame {
     private void BtnGuardarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnGuardarFotoActionPerformed
         // TODO add your handling code here:
                
-        d.getJLFoto().setIcon(iconoFoto);
-        d.setFotoCamara(ruta);
+        f.getJLFoto().setIcon(iconoFoto);
+        f.setFotoCamara(ruta);
  
     }//GEN-LAST:event_BtnGuardarFotoActionPerformed
 
