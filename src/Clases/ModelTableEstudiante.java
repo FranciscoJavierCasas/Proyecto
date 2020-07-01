@@ -15,8 +15,12 @@ import javax.swing.table.AbstractTableModel;
 @SuppressWarnings("unchecked")
 public class ModelTableEstudiante extends AbstractTableModel {
   
-    private String[] nombreColumnas = {"Codigo","Codigo Plan","Documento Identidad","Nombres","Apellidos","Email","Genero","Tipo Usuario"};
+    private String[] nombreColumnas = {"Codigo","Codigo Plan","DI","Nombres","Apellidos","Email","Genero","Tipo Usuario"};
     private ArrayList<Estudiante> cls;
+    
+    public void actulizarDatos(ArrayList<Estudiante>cls){
+        this.cls = cls;
+    }
     
     public ModelTableEstudiante(ArrayList<Estudiante> cls) {
         this.cls = cls;

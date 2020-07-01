@@ -13,6 +13,9 @@ public class ModelTableDocente extends AbstractTableModel{
     private String[] nombreColumnas = {"Documento Identidad","Nombres","Apellidos","Email","Genero","Tipo Usuario"};
     private ArrayList<Docente> cls;
 
+    public void actualizarDatos(ArrayList<Docente> cls) {
+        this.cls = cls;
+    }
     public ModelTableDocente(ArrayList<Docente> cls) {
         this.cls = cls;
     }

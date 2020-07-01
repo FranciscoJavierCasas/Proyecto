@@ -87,24 +87,20 @@ public class PanelConsultarDocente extends javax.swing.JPanel {
 
         jPanel2 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
-        TxtBuscar = new javax.swing.JTextField();
         BtnMostrarTodos = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         JTableDocente = new javax.swing.JTable();
+        TxtBuscar = new rscomponentshade.RSTextFieldShade();
         BtnAtras = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Base de Datos Docente"));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel11.setText("Busqueda: ");
-
-        TxtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                TxtBuscarKeyReleased(evt);
-            }
-        });
+        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 27, -1, -1));
 
         BtnMostrarTodos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/button_mostrar-todo.png"))); // NOI18N
         BtnMostrarTodos.setBorderPainted(false);
@@ -116,6 +112,7 @@ public class PanelConsultarDocente extends javax.swing.JPanel {
                 BtnMostrarTodosActionPerformed(evt);
             }
         });
+        jPanel2.add(BtnMostrarTodos, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 15, 156, -1));
 
         JTableDocente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -133,39 +130,16 @@ public class PanelConsultarDocente extends javax.swing.JPanel {
         JTableDocente.setShowVerticalLines(false);
         jScrollPane1.setViewportView(JTableDocente);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(TxtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(BtnMostrarTodos, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 577, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 970, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(19, 19, 19))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel11)
-                            .addComponent(TxtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(BtnMostrarTodos))
-                .addGap(52, 52, 52)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 117, 970, 486));
+
+        TxtBuscar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        TxtBuscar.setPlaceholder("");
+        TxtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TxtBuscarKeyReleased(evt);
+            }
+        });
+        jPanel2.add(TxtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 25, 160, 30));
 
         add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, 620));
 
@@ -181,11 +155,6 @@ public class PanelConsultarDocente extends javax.swing.JPanel {
         });
         add(BtnAtras, new org.netbeans.lib.awtextra.AbsoluteConstraints(838, 683, 160, -1));
     }// </editor-fold>//GEN-END:initComponents
-
-    private void TxtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtBuscarKeyReleased
-        // TODO add your handling code here:
-        mostrarusuarios(TxtBuscar.getText());
-    }//GEN-LAST:event_TxtBuscarKeyReleased
 
     private void BtnMostrarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnMostrarTodosActionPerformed
         // TODO add your handling code here:
@@ -204,12 +173,17 @@ public class PanelConsultarDocente extends javax.swing.JPanel {
         PanelPrincipal.repaint();
     }//GEN-LAST:event_BtnAtrasActionPerformed
 
+    private void TxtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtBuscarKeyReleased
+        // TODO add your handling code here:
+        mostrarusuarios(TxtBuscar.getText());
+    }//GEN-LAST:event_TxtBuscarKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnAtras;
     private javax.swing.JButton BtnMostrarTodos;
     private javax.swing.JTable JTableDocente;
-    private javax.swing.JTextField TxtBuscar;
+    private rscomponentshade.RSTextFieldShade TxtBuscar;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

@@ -25,6 +25,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import org.netbeans.lib.awtextra.AbsoluteLayout;
+import rojeru_san.RSLabelFecha;
+import rojeru_san.RSLabelHora;
 import rojerusan.RSNotifyAnimated;
 
 /**
@@ -36,7 +39,6 @@ public class InterfazInicio extends javax.swing.JFrame {
     int clave = 0;
     int tipoDocente = 0;
     int claveDocente =0;
-    
     
     public int getClave() {
         return clave;
@@ -64,12 +66,13 @@ public class InterfazInicio extends javax.swing.JFrame {
     }
     PanelAjustesDocente configuracionDocente = null;
 
-    
+  
     /**
      * Creates new form InterfazInicio
      */
     @SuppressWarnings("unchecked") 
     public InterfazInicio() {
+        this.cn = cc.conexion();
         initComponents();
         this.setLocationRelativeTo(null);
         this.getContentPane().setBackground(Color.white);
@@ -79,11 +82,11 @@ public class InterfazInicio extends javax.swing.JFrame {
 //        new jBlocked(this).block();
         configuracion = new PanelAjustesEstudiante(this);   
         configuracionDocente = new PanelAjustesDocente(this);
-        JLFoto.setIcon(new CustomImageIcon(getClass().getResource("/Imagenes/Usuario.png")));
+        JLFoto.setImagen(new CustomImageIcon(getClass().getResource("/Imagenes/Usuario.png")));
 
         //jPanel1.setVisible(false);
         TxtUsuario.requestFocus();
-        JLCerrarSesion.setVisible(false);
+
     }
 
     void Limpiar(){
@@ -107,8 +110,8 @@ public class InterfazInicio extends javax.swing.JFrame {
         BtnCancelar.setEnabled(true);
     }
     void CerrarSesionFoto(){
-        JLCerrarSesion.setVisible(false);
-        JLFoto.setIcon(new CustomImageIcon(getClass().getResource("/Imagenes/Usuario.png")));
+
+        JLFoto.setImagen(new CustomImageIcon(getClass().getResource("/Imagenes/Usuario.png")));
 
     }
     void ocultar(String usuario, String plan, String pass){
@@ -126,32 +129,22 @@ public class InterfazInicio extends javax.swing.JFrame {
         
                     if(cap.equals("Monitor"))
                      {
-                     jLabel1.setVisible(false);
-                     jLabel4.setVisible(false);
                      TxtUsuario.setVisible(false);
-                     jSeparator2.setVisible(false);
-                     jLabel2.setVisible(false);
-                     jLabel5.setVisible(false);
                      JpContra.setVisible(false);
-                     jSeparator1.setVisible(false);
-                     JLCerrarSesion.setVisible(false);
                      BtnEntrar.setVisible(false);
                      BtnCancelar.setVisible(false);
+                     jLabel1.setVisible(false);
+                     LblAqui.setVisible(false);
 //                     tipoUsuario = 1;
                     }
                      if(cap.equals("Estudiante"))
                     {
-                     jLabel1.setVisible(false);
-                     jLabel4.setVisible(false);
                      TxtUsuario.setVisible(false);
-                     jSeparator2.setVisible(false);
-                     jLabel2.setVisible(false);
-                     jLabel5.setVisible(false);
                      JpContra.setVisible(false);
-                     jSeparator1.setVisible(false);
-                     JLCerrarSesion.setVisible(false);
                      BtnEntrar.setVisible(false);
                      BtnCancelar.setVisible(false);
+                     jLabel1.setVisible(false);
+                     LblAqui.setVisible(false);
 //                     tipoUsuario = 0;
                     }
                 if((!cap.equals("Monitor"))&& (!cap.equals("Estudiante")))
@@ -181,32 +174,22 @@ public class InterfazInicio extends javax.swing.JFrame {
         
                     if(cap.equals("Docente"))
                      {
-                     jLabel1.setVisible(false);
-                     jLabel4.setVisible(false);
                      TxtUsuario.setVisible(false);
-                     jSeparator2.setVisible(false);
-                     jLabel2.setVisible(false);
-                     jLabel5.setVisible(false);
                      JpContra.setVisible(false);
-                     jSeparator1.setVisible(false);
-                     JLCerrarSesion.setVisible(false);
                      BtnEntrar.setVisible(false);
                      BtnCancelar.setVisible(false);
+                     jLabel1.setVisible(false);
+                     LblAqui.setVisible(false);
 //                     tipoUsuario = 1;
                     }
                      if(cap.equals("Invitado"))
                     {
-                     jLabel1.setVisible(false);
-                     jLabel4.setVisible(false);
                      TxtUsuario.setVisible(false);
-                     jSeparator2.setVisible(false);
-                     jLabel2.setVisible(false);
-                     jLabel5.setVisible(false);
                      JpContra.setVisible(false);
-                     jSeparator1.setVisible(false);
-                     JLCerrarSesion.setVisible(false);
                      BtnEntrar.setVisible(false);
                      BtnCancelar.setVisible(false);
+                     jLabel1.setVisible(false);
+                     LblAqui.setVisible(false);
 //                     tipoUsuario = 0;
                     }
                 if((!cap.equals("Docente"))&& (!cap.equals("Invitado")))
@@ -224,16 +207,12 @@ public class InterfazInicio extends javax.swing.JFrame {
     }
 
     void desocultar(){
-         jLabel1.setVisible(true);
-         jLabel4.setVisible(true);
          TxtUsuario.setVisible(true);
-         jSeparator2.setVisible(true);
-         jLabel2.setVisible(true);
-         jLabel5.setVisible(true);
          JpContra.setVisible(true);
-         jSeparator1.setVisible(true);
          BtnEntrar.setVisible(true);
          BtnCancelar.setVisible(true);
+         jLabel1.setVisible(true);
+         LblAqui.setVisible(true);
     }
     
     
@@ -256,7 +235,7 @@ public class InterfazInicio extends javax.swing.JFrame {
             if(cap.equals("Monitor"))
             {
                       new rojerusan.RSNotifyAnimated("ACCESO", "Bienvenido", 
-                        5, RSNotifyAnimated.PositionNotify.TopRight, RSNotifyAnimated.AnimationNotify.UpBottom, 
+                        3, RSNotifyAnimated.PositionNotify.TopRight, RSNotifyAnimated.AnimationNotify.UpBottom, 
                         RSNotifyAnimated.TypeNotify.SUCCESS).setVisible(true);
                   // inicia el panel monitor  
                     PanelMonitor p1 = new PanelMonitor(this);
@@ -266,7 +245,7 @@ public class InterfazInicio extends javax.swing.JFrame {
                     PanelPrincipal.add(p1, BorderLayout.CENTER);
                     PanelPrincipal.revalidate();
                     PanelPrincipal.repaint();
-                    JLCerrarSesion.setVisible(true);
+
                     BotonBloquear();
                     Bloquear();
                     tipoUsuario = 1;
@@ -278,7 +257,7 @@ public class InterfazInicio extends javax.swing.JFrame {
                 // alerta de mensaje  
 
                       new rojerusan.RSNotifyAnimated("CORRECTO", "Bienvenido a la plataforma", 
-                        5, RSNotifyAnimated.PositionNotify.TopRight, RSNotifyAnimated.AnimationNotify.UpBottom, 
+                        3, RSNotifyAnimated.PositionNotify.TopRight, RSNotifyAnimated.AnimationNotify.UpBottom, 
                         RSNotifyAnimated.TypeNotify.SUCCESS).setVisible(true);
                   // inicia el panel monitor  
                     PanelEstudiante p1 = new PanelEstudiante(this);
@@ -288,7 +267,7 @@ public class InterfazInicio extends javax.swing.JFrame {
                     PanelPrincipal.add(p1, BorderLayout.CENTER);
                     PanelPrincipal.revalidate();
                     PanelPrincipal.repaint();
-                    JLCerrarSesion.setVisible(true);
+
                     BtnEntrar.setEnabled(false);
                     BotonDesbloquear();
                     Bloquear();
@@ -300,7 +279,7 @@ public class InterfazInicio extends javax.swing.JFrame {
             {
 
                       new rojerusan.RSNotifyAnimated("ERROR", "Acceso Denegado", 
-                        5, RSNotifyAnimated.PositionNotify.TopRight, RSNotifyAnimated.AnimationNotify.UpBottom, 
+                        3, RSNotifyAnimated.PositionNotify.TopRight, RSNotifyAnimated.AnimationNotify.UpBottom, 
                         RSNotifyAnimated.TypeNotify.ERROR).setVisible(true);
                    //inicia el panel monitor  
                 Limpiar();
@@ -325,7 +304,7 @@ public class InterfazInicio extends javax.swing.JFrame {
             {
 
                       new rojerusan.RSNotifyAnimated("ACCESO", "Bienvenido", 
-                        5, RSNotifyAnimated.PositionNotify.TopRight, RSNotifyAnimated.AnimationNotify.UpBottom, 
+                        3, RSNotifyAnimated.PositionNotify.TopRight, RSNotifyAnimated.AnimationNotify.UpBottom, 
                         RSNotifyAnimated.TypeNotify.SUCCESS).setVisible(true);
                   // inicia el panel monitor  
                     PanelDocente p1 = new PanelDocente(this);
@@ -335,7 +314,7 @@ public class InterfazInicio extends javax.swing.JFrame {
                     PanelPrincipal.add(p1, BorderLayout.CENTER);
                     PanelPrincipal.revalidate();
                     PanelPrincipal.repaint();
-                    JLCerrarSesion.setVisible(true);
+
                     BotonBloquear();
                     Bloquear();
                     tipoDocente = 1;
@@ -345,17 +324,17 @@ public class InterfazInicio extends javax.swing.JFrame {
             {
 
                       new rojerusan.RSNotifyAnimated("ACCESO", "Bienvenido", 
-                        5, RSNotifyAnimated.PositionNotify.TopRight, RSNotifyAnimated.AnimationNotify.UpBottom, 
+                        3, RSNotifyAnimated.PositionNotify.TopRight, RSNotifyAnimated.AnimationNotify.UpBottom, 
                         RSNotifyAnimated.TypeNotify.SUCCESS).setVisible(true);
                   // inicia el panel monitor  
-                    PanelEstudiante p1 = new PanelEstudiante(this);
+                    PanelInvitado p1 = new PanelInvitado(this);
                     p1.setSize(1090, 1000);//tamaño del Jpanel
                     p1.setLocation(5, 5); // posicion del panel principal
                     PanelPrincipal.removeAll();
                     PanelPrincipal.add(p1, BorderLayout.CENTER);
                     PanelPrincipal.revalidate();
                     PanelPrincipal.repaint();
-                    JLCerrarSesion.setVisible(true);
+
                     BtnEntrar.setEnabled(false);
                     BotonDesbloquear();
                     Bloquear();
@@ -366,7 +345,7 @@ public class InterfazInicio extends javax.swing.JFrame {
             {
 
                     new rojerusan.RSNotifyAnimated("ERROR", "Acceso Denegado", 
-                        5, RSNotifyAnimated.PositionNotify.TopRight, RSNotifyAnimated.AnimationNotify.UpBottom, 
+                        3, RSNotifyAnimated.PositionNotify.TopRight, RSNotifyAnimated.AnimationNotify.UpBottom, 
                         RSNotifyAnimated.TypeNotify.ERROR).setVisible(true);
                   // inicia el panel monitor  
                 Limpiar();         
@@ -395,7 +374,20 @@ public class InterfazInicio extends javax.swing.JFrame {
             rs = ps.executeQuery();
             byte[] image = null;
             if(rs.next()){
-                           
+                
+                String codigo = rs.getString("Codigo");
+                InterfazSesion.Codigo = codigo;
+                String codigoPlan = rs.getString("CodigoPlan");
+                InterfazSesion.CodigoPlan = codigoPlan;
+                String nombre = rs.getString("Nombres");
+                InterfazSesion.Nombre = nombre;
+                String apellido = rs.getString("Apellidos");
+                InterfazSesion.Apellido = apellido;
+                String tipo = rs.getString("TipoUsuario");
+                InterfazSesion.Tipo = tipo;
+                String hora = rSLabelHora1.getHora();
+                InterfazSesion.HoraInicio = hora;
+                
                 ouput = new ByteArrayOutputStream();
                 isdatos = rs.getBinaryStream("Foto");
                 
@@ -411,10 +403,10 @@ public class InterfazInicio extends javax.swing.JFrame {
                 foto=Toolkit.getDefaultToolkit().createImage(ouput.toByteArray()).getScaledInstance
                 (JLFoto.getWidth(), JLFoto.getHeight(), Image.SCALE_DEFAULT);
                 
-                JLFoto.setIcon(new ImageIcon(foto));
+                JLFoto.setImagen(new ImageIcon(foto));
                 }
                 else{
-                    JLFoto.setIcon(new CustomImageIcon(getClass().getResource("/Imagenes/Usuario.png")));
+                    JLFoto.setImagen(new CustomImageIcon(getClass().getResource("/Imagenes/Usuario.png")));
                 }
                
         } else {
@@ -470,10 +462,19 @@ public class InterfazInicio extends javax.swing.JFrame {
             rs = ps.executeQuery();
             byte[] image = null;
             if(rs.next()){
-                           
+                
+                String codigo = rs.getString("DocumentoIdentidad");
+                InterfazSesion.Codigo = codigo;
+                String nombre = rs.getString("Nombres");
+                InterfazSesion.Nombre = nombre;
+                String apellido = rs.getString("Apellidos");
+                InterfazSesion.Apellido = apellido;
+                String tipo = rs.getString("TipoUsuario");
+                InterfazSesion.Tipo = tipo;
+                String hora = rSLabelHora1.getHora();
+                InterfazSesion.HoraInicio = hora;
+                
                 ouput = new ByteArrayOutputStream();
-                
-                
                 isdatos = rs.getBinaryStream("Foto");
                 
                 if(isdatos != null){
@@ -486,10 +487,10 @@ public class InterfazInicio extends javax.swing.JFrame {
                 foto=Toolkit.getDefaultToolkit().createImage(ouput.toByteArray()).getScaledInstance
                 (JLFoto.getWidth(), JLFoto.getHeight(), Image.SCALE_DEFAULT);
                 
-                JLFoto.setIcon(new ImageIcon(foto));
+                JLFoto.setImagen(new ImageIcon(foto));
                 }
                 else{
-                    JLFoto.setIcon(new CustomImageIcon(getClass().getResource("/Imagenes/Usuario.png")));
+                    JLFoto.setImagen(new CustomImageIcon(getClass().getResource("/Imagenes/Usuario.png")));
                 }
         } else {
 //                JOptionPane.showMessageDialog(null, "No existe una persona con la clave");
@@ -536,18 +537,15 @@ public class InterfazInicio extends javax.swing.JFrame {
     private void initComponents() {
 
         JpIngreso = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        JLFoto = new javax.swing.JLabel();
-        TxtUsuario = new javax.swing.JTextField();
-        jSeparator1 = new javax.swing.JSeparator();
-        jSeparator2 = new javax.swing.JSeparator();
-        JpContra = new javax.swing.JPasswordField();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         BtnEntrar = new javax.swing.JButton();
         BtnCancelar = new javax.swing.JButton();
-        JLCerrarSesion = new javax.swing.JLabel();
+        JLFoto = new rojerusan.RSPanelCircleImage();
+        TxtUsuario = new RSMaterialComponent.RSTextFieldMaterialIcon();
+        JpContra = new RSMaterialComponent.RSPasswordMaterialIcon();
+        rSLabelHora1 = new rojeru_san.RSLabelHora();
+        rSLabelFecha1 = new rojeru_san.RSLabelFecha();
+        jLabel1 = new javax.swing.JLabel();
+        LblAqui = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         PanelPrincipal = new javax.swing.JPanel();
 
@@ -559,45 +557,6 @@ public class InterfazInicio extends javax.swing.JFrame {
         JpIngreso.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
         JpIngreso.setForeground(new java.awt.Color(255, 255, 255));
         JpIngreso.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel1.setText("User:");
-        JpIngreso.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, -1));
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel2.setText("Password:");
-        JpIngreso.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, -1, -1));
-
-        JLFoto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        JLFoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons8-usuario-de-género-neutro-96.png"))); // NOI18N
-        JpIngreso.add(JLFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 133, 153));
-
-        TxtUsuario.setFont(new java.awt.Font("Calibri", 1, 16)); // NOI18N
-        TxtUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TxtUsuarioActionPerformed(evt);
-            }
-        });
-        TxtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                TxtUsuarioKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                TxtUsuarioKeyTyped(evt);
-            }
-        });
-        JpIngreso.add(TxtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 340, 150, 30));
-        JpIngreso.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 480, 260, 10));
-        JpIngreso.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, 260, 10));
-
-        JpContra.setFont(new java.awt.Font("Calibri", 1, 16)); // NOI18N
-        JpIngreso.add(JpContra, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 430, 150, 30));
-
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons8-usuario-de-género-neutro-50.png"))); // NOI18N
-        JpIngreso.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, -1, 50));
-
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons8-llave-48.png"))); // NOI18N
-        JpIngreso.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 430, 50, 40));
 
         BtnEntrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/button_aceptar.png"))); // NOI18N
         BtnEntrar.setBorderPainted(false);
@@ -630,16 +589,64 @@ public class InterfazInicio extends javax.swing.JFrame {
         });
         JpIngreso.add(BtnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 570, 170, 50));
 
-        JLCerrarSesion.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        JLCerrarSesion.setText("Cerrar Sesion");
-        JLCerrarSesion.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                JLCerrarSesionMouseClicked(evt);
+        javax.swing.GroupLayout JLFotoLayout = new javax.swing.GroupLayout(JLFoto);
+        JLFoto.setLayout(JLFotoLayout);
+        JLFotoLayout.setHorizontalGroup(
+            JLFotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 180, Short.MAX_VALUE)
+        );
+        JLFotoLayout.setVerticalGroup(
+            JLFotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 180, Short.MAX_VALUE)
+        );
+
+        JpIngreso.add(JLFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, 180, 180));
+
+        TxtUsuario.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ACCOUNT_CIRCLE);
+        TxtUsuario.setInheritsPopupMenu(true);
+        TxtUsuario.setPlaceholder("Usuario");
+        TxtUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TxtUsuarioActionPerformed(evt);
             }
         });
-        JpIngreso.add(JLCerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 490, 80, 20));
+        TxtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TxtUsuarioKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                TxtUsuarioKeyTyped(evt);
+            }
+        });
+        JpIngreso.add(TxtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 260, -1));
 
-        getContentPane().add(JpIngreso, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 290, 1000));
+        JpContra.setPlaceholder("Contraseña");
+        JpIngreso.add(JpContra, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 430, 260, -1));
+        JpIngreso.add(rSLabelHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 730, 90, -1));
+        JpIngreso.add(rSLabelFecha1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 730, 90, -1));
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel1.setText("¿Olvidaste tú usuario o contraseña?, has clic");
+        JpIngreso.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(3, 705, 260, 20));
+
+        LblAqui.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LblAqui.setText("aqui");
+        LblAqui.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                LblAquiMouseMoved(evt);
+            }
+        });
+        LblAqui.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LblAquiMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                LblAquiMouseExited(evt);
+            }
+        });
+        JpIngreso.add(LblAqui, new org.netbeans.lib.awtextra.AbsoluteConstraints(262, 705, 25, 20));
+
+        getContentPane().add(JpIngreso, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 290, 780));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -656,12 +663,12 @@ public class InterfazInicio extends javax.swing.JFrame {
         );
         PanelPrincipalLayout.setVerticalGroup(
             PanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 998, Short.MAX_VALUE)
+            .addGap(0, 778, Short.MAX_VALUE)
         );
 
-        jPanel1.add(PanelPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1090, 1000));
+        jPanel1.add(PanelPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1090, 780));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 0, 1090, 1000));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 0, 1090, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -697,52 +704,17 @@ try {
   
 }catch(Exception e){
     e.printStackTrace();
-    JOptionPane.showMessageDialog(this,"Ingrese los datos");
+    JOptionPane.showMessageDialog(this,""+e);
 }
 
 
     }//GEN-LAST:event_BtnEntrarActionPerformed
-
-    private void TxtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtUsuarioActionPerformed
-        // TODO add your handling code here:
-        TxtUsuario.requestFocus();
-    }//GEN-LAST:event_TxtUsuarioActionPerformed
 
     private void BtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCancelarActionPerformed
 
         Limpiar();
 
     }//GEN-LAST:event_BtnCancelarActionPerformed
-
-    private void JLCerrarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JLCerrarSesionMouseClicked
-        // TODO add your handling code here:
-
-        //vuelve el panel principal
-        PanelPrincipal.removeAll();
-        PanelPrincipal.revalidate();
-        PanelPrincipal.repaint();
-        //limpia la caja de texto
-        Limpiar();
-        //desbloquea la caja de texto
-        Desbloquear();
-        //el jLabel de cerrar sesion se oculta
-        JLCerrarSesion.setVisible(false);
-        //
-        BtnEntrar.setEnabled(true);
-        BtnCancelar.setEnabled(true);
-        //foto por defecto
-        JLFoto.setIcon(new CustomImageIcon(getClass().getResource("/Imagenes/Usuario.png")));
-
-    }//GEN-LAST:event_JLCerrarSesionMouseClicked
-
-    private void TxtUsuarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtUsuarioKeyReleased
-        // TODO add your handling code here:
-        // esto se hace para obtener el valor en otro jframe
-        String info = TxtUsuario.getText();
-        InterfazSesion.Usuario = info;
-//////////////////////////////////////////////////////////////////////////
-
-    }//GEN-LAST:event_TxtUsuarioKeyReleased
 
     private void BtnEntrarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnEntrarKeyPressed
         // TODO add your handling code here:
@@ -783,6 +755,18 @@ try {
    
     }//GEN-LAST:event_BtnEntrarKeyPressed
 
+    private void TxtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtUsuarioActionPerformed
+        // TODO add your handling code here:
+        TxtUsuario.requestFocus();
+    }//GEN-LAST:event_TxtUsuarioActionPerformed
+
+    private void TxtUsuarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtUsuarioKeyReleased
+        // TODO add your handling code here:
+        // esto se hace para obtener el valor en otro jframe
+//        String info = TxtUsuario.getText();
+//        InterfazSesion.Usuario = info;
+    }//GEN-LAST:event_TxtUsuarioKeyReleased
+
     private void TxtUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtUsuarioKeyTyped
         // TODO add your handling code here:
         String nuestroTexto = TxtUsuario.getText();
@@ -792,6 +776,28 @@ try {
             TxtUsuario.setText(nuestroTexto);
         }
     }//GEN-LAST:event_TxtUsuarioKeyTyped
+
+    private void LblAquiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LblAquiMouseClicked
+        // TODO add your handling code here:
+                    PanelRecuperar p1 = new PanelRecuperar(this);
+                    p1.setSize(769, 336);//tamaño del Jpanel
+                    p1.setLocation(150, 200); // posicion del panel principal
+                    PanelPrincipal.removeAll();
+                    PanelPrincipal.add(p1, BorderLayout.CENTER);
+                    PanelPrincipal.revalidate();
+                    PanelPrincipal.repaint();
+    }//GEN-LAST:event_LblAquiMouseClicked
+
+    private void LblAquiMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LblAquiMouseMoved
+        // TODO add your handling code here:
+        LblAqui.setForeground(new Color(51, 153, 255));
+    }//GEN-LAST:event_LblAquiMouseMoved
+
+    private void LblAquiMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LblAquiMouseExited
+        // TODO add your handling code here:
+        
+        LblAqui.setForeground(new Color(0, 0, 0));
+    }//GEN-LAST:event_LblAquiMouseExited
 
     /**
      * @param args the command line arguments
@@ -835,19 +841,16 @@ try {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnCancelar;
     private javax.swing.JButton BtnEntrar;
-    private javax.swing.JLabel JLCerrarSesion;
-    private javax.swing.JLabel JLFoto;
-    private javax.swing.JPasswordField JpContra;
+    private rojerusan.RSPanelCircleImage JLFoto;
+    private RSMaterialComponent.RSPasswordMaterialIcon JpContra;
     private javax.swing.JPanel JpIngreso;
+    private javax.swing.JLabel LblAqui;
     public static javax.swing.JPanel PanelPrincipal;
-    private javax.swing.JTextField TxtUsuario;
+    private RSMaterialComponent.RSTextFieldMaterialIcon TxtUsuario;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
+    private rojeru_san.RSLabelFecha rSLabelFecha1;
+    private rojeru_san.RSLabelHora rSLabelHora1;
     // End of variables declaration//GEN-END:variables
 conectar cc = new conectar();
     Connection cn = cc.conexion();

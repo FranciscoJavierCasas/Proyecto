@@ -5,12 +5,14 @@
  */
 package proyecto;
 
+import static Conectar.ConexionBase.cn;
 import Conectar.conectar;
 import java.awt.BorderLayout;
 import static proyecto.InterfazInicio.PanelPrincipal;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.JOptionPane;
 import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -18,6 +20,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
+import rojerusan.RSNotifyAnimated;
 
 
 /**
@@ -31,6 +34,7 @@ public class PanelReporte extends javax.swing.JPanel {
     PanelEstudiante p2 = null;
     
     String usuario,plan,id;
+    boolean c = true;
 //    int tipoUsuario = 0;
 //    Connection con = null;
 //    ConexionBase conexion = null;
@@ -42,6 +46,11 @@ public class PanelReporte extends javax.swing.JPanel {
      public PanelReporte(InterfazInicio n) {
         initComponents();
         inicio = n;
+        
+        BtnEliminar.setVisible(false);
+        JlTexto.setVisible(false);
+        JpSeparador.setVisible(false);
+        BtnOcultar.setVisible(false);
 //
 
     }
@@ -67,7 +76,8 @@ public class PanelReporte extends javax.swing.JPanel {
             Connection conn = con.conexion();
             
             JasperReport reporte = null;
-            String path = "src\\Reportes\\ReporteUso.jasper";
+//            String path = ".\\src\\Reportes\\ReporteUso.jasper";
+              String path = ".\\ReporteUso.jasper";
 //            
 //             Map parametro = new HashMap();
 //             parametro.put("codigo", TxtCodigo.getText());
@@ -84,9 +94,47 @@ public class PanelReporte extends javax.swing.JPanel {
             
         } catch (JRException ex) {
             System.out.println("Error al crear reporte"+ex);
-        }
-      
+        } 
     }
+    @SuppressWarnings("unchecked") 
+    void GenerarReporteUsoBusqueda(){
+        
+        try {
+            conectar con = new conectar();
+            Connection conn = con.conexion();
+            
+            JasperReport reporte = null;
+            String path = ".\\ReporteUsoBusqueda.jasper";
+//            
+             Map parametro = new HashMap();
+             parametro.put("codigo", TxtReporteUso.getText());
+             parametro.put("codigoplan", TxtReporteUso.getText());
+             parametro.put("nombre", TxtReporteUso.getText());
+             parametro.put("apellido", TxtReporteUso.getText());
+             parametro.put("horainicio", TxtReporteUso.getText());
+             parametro.put("horafinal", TxtReporteUso.getText());
+             parametro.put("fecha", TxtReporteUso.getText());
+             parametro.put("tiempo", TxtReporteUso.getText());
+             parametro.put("sala", TxtReporteUso.getText());
+             parametro.put("pc", TxtReporteUso.getText());
+             parametro.put("tipo", TxtReporteUso.getText());
+            
+            reporte = (JasperReport) JRLoader.loadObjectFromFile(path);
+            
+            JasperPrint jprint = JasperFillManager.fillReport(reporte, parametro, conn);
+            
+            JasperViewer view = new JasperViewer(jprint, false);
+            
+            view.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            
+            view.setVisible(true);
+            
+        } catch (JRException ex) {
+            System.out.println("Error al crear reporte"+ex);
+        } 
+        
+    }
+    
         @SuppressWarnings("unchecked")
         void GenerarReporteEstudiante(){
 
@@ -95,7 +143,7 @@ public class PanelReporte extends javax.swing.JPanel {
             Connection conn = con.conexion();
             
             JasperReport reporte = null;
-            String path = "src\\Reportes\\ReporteEstudiante.jasper";
+            String path = ".\\ReporteEstudiante.jasper";
 //            
 //             Map parametro = new HashMap();
 //             parametro.put("codigo", TxtCodigo.getText());
@@ -122,13 +170,15 @@ public class PanelReporte extends javax.swing.JPanel {
             Connection conn = con.conexion();
             
             JasperReport reporte = null;
-            String path = "src\\Reportes\\ReporteEstudianteBusqueda.jasper";
-//            String url =  "SELECT * FROM registro WHERE codigo = '"+usuario+"' OR "+"codigoplan = '"+usuario+"' "
-//               + "OR documentoidentidad = '"+usuario+"'"; 
+            String path = ".\\ReporteEstudianteBusqueda.jasper";
            
              Map parametro = new HashMap();
-             parametro.put("codigo", TxtCodigo.getText());
-             parametro.put("CodigoPlan", TxtCodigo.getText());
+             parametro.put("codigo", TxtEstudiante.getText());
+             parametro.put("CodigoPlan", TxtEstudiante.getText());
+             parametro.put("DI", TxtEstudiante.getText());
+             parametro.put("Nombres", TxtEstudiante.getText());
+             parametro.put("Apellidos", TxtEstudiante.getText());
+             parametro.put("TipoUsuario", TxtEstudiante.getText());
 
             reporte = (JasperReport) JRLoader.loadObjectFromFile(path);
             
@@ -152,10 +202,8 @@ public class PanelReporte extends javax.swing.JPanel {
             Connection conn = con.conexion();
             
             JasperReport reporte = null;
-            String path = "src\\Reportes\\ReporteDocente.jasper";
+            String path = ".\\ReporteDocente.jasper";
 //            
-//            Map parametro = new HashMap();
-//            parametro.put("id_estado", 36);
             
             reporte = (JasperReport) JRLoader.loadObjectFromFile(path);
             
@@ -172,25 +220,105 @@ public class PanelReporte extends javax.swing.JPanel {
         }
       
     }
-    
+      @SuppressWarnings("unchecked")   
+      void GenerarReporteDocenteBusqueda(){
+                        try {
+            conectar con = new conectar();
+            Connection conn = con.conexion();
+            
+            JasperReport reporte = null;
+            String path = ".\\ReporteDocenteBusqueda.jasper";
+//            
+            Map parametro = new HashMap();
+             parametro.put("DI", TxtDocente.getText());
+             parametro.put("Nombres", TxtDocente.getText());
+             parametro.put("Apellidos", TxtDocente.getText());
+             parametro.put("TipoUsuario", TxtDocente.getText());
+             
+            reporte = (JasperReport) JRLoader.loadObjectFromFile(path);
+            
+            JasperPrint jprint = JasperFillManager.fillReport(reporte, parametro, conn);
+            
+            JasperViewer view = new JasperViewer(jprint, false);
+            
+            view.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            
+            view.setVisible(true);
+            
+        } catch (JRException ex) {
+            System.out.println("Error al crear reporte"+ex);
+        }
+        }
+    public void eliminar(){
+        String sql ="DELETE FROM reportes";
+
+        try{
+            PreparedStatement st;
+            st =  cn.prepareStatement(sql);
+            int res = st.executeUpdate();
+            
+            if(res>0){
+                new rojerusan.RSNotifyAnimated("CORRECTO", "Datos Eliminados", 
+                        3, RSNotifyAnimated.PositionNotify.TopRight, RSNotifyAnimated.AnimationNotify.UpBottom, 
+                        RSNotifyAnimated.TypeNotify.SUCCESS).setVisible(true);
+                
+            } else {
+                 new rojerusan.RSNotifyAnimated("ERROR", "Problemas para eliminar", 
+                        3, RSNotifyAnimated.PositionNotify.TopRight, RSNotifyAnimated.AnimationNotify.UpBottom, 
+                        RSNotifyAnimated.TypeNotify.ERROR).setVisible(true);
+                 
+            }
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        }
+    }
+    public void revelar(){
+                if(c){
+            BtnEliminar.setVisible(true);
+            JlTexto.setVisible(true);
+            JpSeparador.setVisible(true);
+            BtnOcultar.setVisible(true);
+            c = false;
+        }
+        else{
+            c = true;
+            BtnEliminar.setVisible(false);
+            JlTexto.setVisible(false);
+            JpSeparador.setVisible(false);
+            BtnOcultar.setVisible(false);
+        }
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         BtnAtras3 = new javax.swing.JButton();
-        jLabel20 = new javax.swing.JLabel();
-        JlEstudianteInscritos = new javax.swing.JLabel();
-        Iniciar = new javax.swing.JLabel();
-        JlDocenteInscritos = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        Registrar = new javax.swing.JLabel();
-        JlReporteUso = new javax.swing.JLabel();
-        Consultar = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        Reporte = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        TxtCodigo = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        BtnReporteUso = new javax.swing.JButton();
+        jLabel16 = new javax.swing.JLabel();
+        JlReporteUso = new javax.swing.JLabel();
+        ReporteUso = new javax.swing.JLabel();
+        TxtReporteUso = new rscomponentshade.RSTextFieldShade();
+        Estudiante = new javax.swing.JPanel();
+        JlEstudianteInscritos1 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        EstudianteInscritos = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        BtnGenerarEstudiante = new javax.swing.JButton();
+        TxtEstudiante = new rscomponentshade.RSTextFieldShade();
+        Docente = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        BtnGenerarDocente = new javax.swing.JButton();
+        JlDocenteInscritos1 = new javax.swing.JLabel();
+        DocenteInscritos = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        TxtDocente = new rscomponentshade.RSTextFieldShade();
+        BtnEliminar = new javax.swing.JButton();
+        JpSeparador = new javax.swing.JSeparator();
+        JlTexto = new javax.swing.JLabel();
+        BtnOcultar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -207,51 +335,34 @@ public class PanelReporte extends javax.swing.JPanel {
         });
         add(BtnAtras3, new org.netbeans.lib.awtextra.AbsoluteConstraints(838, 683, 160, 50));
 
-        jLabel20.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel20.setText("Estudiante Inscritos");
-        add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 320, -1, -1));
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Informes del Sistema");
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 10, 350, -1));
 
-        JlEstudianteInscritos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        JlEstudianteInscritos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/internetmonitor_102153.png"))); // NOI18N
-        JlEstudianteInscritos.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                JlEstudianteInscritosMouseMoved(evt);
-            }
-        });
-        JlEstudianteInscritos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                JlEstudianteInscritosMouseClicked(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                JlEstudianteInscritosMouseExited(evt);
-            }
-        });
-        add(JlEstudianteInscritos, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 220, 100, 100));
-        add(Iniciar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 220, 180, 130));
+        Reporte.setBackground(new java.awt.Color(255, 255, 255));
+        Reporte.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Reporte de Uso", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+        Reporte.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        JlDocenteInscritos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        JlDocenteInscritos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons8-editar-archivo-96.png"))); // NOI18N
-        JlDocenteInscritos.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                JlDocenteInscritosMouseMoved(evt);
-            }
-        });
-        JlDocenteInscritos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                JlDocenteInscritosMouseClicked(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                JlDocenteInscritosMouseExited(evt);
-            }
-        });
-        add(JlDocenteInscritos, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 230, 100, 90));
+        jLabel2.setText("Buscar:");
+        Reporte.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 170, -1, 20));
 
-        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel15.setText("Docentes Inscritos");
-        add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 320, -1, -1));
-        add(Registrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 220, 180, 130));
+        BtnReporteUso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/button_generar.png"))); // NOI18N
+        BtnReporteUso.setBorderPainted(false);
+        BtnReporteUso.setContentAreaFilled(false);
+        BtnReporteUso.setDefaultCapable(false);
+        BtnReporteUso.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/button_generar_On.png"))); // NOI18N
+        BtnReporteUso.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/button_generar_On.png"))); // NOI18N
+        BtnReporteUso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnReporteUsoActionPerformed(evt);
+            }
+        });
+        Reporte.add(BtnReporteUso, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, 160, 50));
+
+        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel16.setText("Reporte de Uso");
+        Reporte.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 130, -1, -1));
 
         JlReporteUso.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         JlReporteUso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons8-consulta-96.png"))); // NOI18N
@@ -268,29 +379,152 @@ public class PanelReporte extends javax.swing.JPanel {
                 JlReporteUsoMouseExited(evt);
             }
         });
-        add(JlReporteUso, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 220, 90, 100));
-        add(Consultar, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 220, 180, 130));
+        Reporte.add(JlReporteUso, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, 90, 100));
+        Reporte.add(ReporteUso, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 180, 130));
 
-        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel16.setText("Reporte de Uso");
-        add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 320, -1, -1));
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Informes del Sistema");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 10, 350, -1));
-
-        jLabel2.setText("Buscar:");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 370, -1, -1));
-        add(TxtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 370, 120, -1));
-
-        jButton1.setText("Buscar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        TxtReporteUso.setPlaceholder("");
+        TxtReporteUso.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                TxtReporteUsoKeyTyped(evt);
             }
         });
-        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 400, -1, -1));
+        Reporte.add(TxtReporteUso, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 165, 160, 30));
+
+        add(Reporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 220, 260, 250));
+
+        Estudiante.setBackground(new java.awt.Color(255, 255, 255));
+        Estudiante.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Estudiantes", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+        Estudiante.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        JlEstudianteInscritos1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        JlEstudianteInscritos1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/internetmonitor_102153.png"))); // NOI18N
+        JlEstudianteInscritos1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                JlEstudianteInscritos1MouseMoved(evt);
+            }
+        });
+        JlEstudianteInscritos1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JlEstudianteInscritos1MouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                JlEstudianteInscritos1MouseExited(evt);
+            }
+        });
+        Estudiante.add(JlEstudianteInscritos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, 100, 100));
+
+        jLabel21.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel21.setText("Estudiante Inscritos");
+        Estudiante.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, -1, -1));
+        Estudiante.add(EstudianteInscritos, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 180, 130));
+
+        jLabel3.setText("Buscar:");
+        Estudiante.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 170, -1, 20));
+
+        BtnGenerarEstudiante.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/button_generar.png"))); // NOI18N
+        BtnGenerarEstudiante.setBorderPainted(false);
+        BtnGenerarEstudiante.setContentAreaFilled(false);
+        BtnGenerarEstudiante.setDefaultCapable(false);
+        BtnGenerarEstudiante.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/button_generar_On.png"))); // NOI18N
+        BtnGenerarEstudiante.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/button_generar_On.png"))); // NOI18N
+        BtnGenerarEstudiante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnGenerarEstudianteActionPerformed(evt);
+            }
+        });
+        Estudiante.add(BtnGenerarEstudiante, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, 160, 50));
+
+        TxtEstudiante.setPlaceholder("");
+        TxtEstudiante.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                TxtEstudianteKeyTyped(evt);
+            }
+        });
+        Estudiante.add(TxtEstudiante, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 165, 160, 30));
+
+        add(Estudiante, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 220, 260, 250));
+
+        Docente.setBackground(new java.awt.Color(255, 255, 255));
+        Docente.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Docentes", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+        Docente.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel4.setText("Buscar:");
+        Docente.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 170, -1, 20));
+
+        BtnGenerarDocente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/button_generar.png"))); // NOI18N
+        BtnGenerarDocente.setBorderPainted(false);
+        BtnGenerarDocente.setContentAreaFilled(false);
+        BtnGenerarDocente.setDefaultCapable(false);
+        BtnGenerarDocente.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/button_generar_On.png"))); // NOI18N
+        BtnGenerarDocente.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/button_generar_On.png"))); // NOI18N
+        BtnGenerarDocente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnGenerarDocenteActionPerformed(evt);
+            }
+        });
+        Docente.add(BtnGenerarDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, 160, 50));
+
+        JlDocenteInscritos1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        JlDocenteInscritos1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons8-editar-archivo-96.png"))); // NOI18N
+        JlDocenteInscritos1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                JlDocenteInscritos1MouseMoved(evt);
+            }
+        });
+        JlDocenteInscritos1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JlDocenteInscritos1MouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                JlDocenteInscritos1MouseExited(evt);
+            }
+        });
+        Docente.add(JlDocenteInscritos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 40, 100, 90));
+        Docente.add(DocenteInscritos, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 180, 130));
+
+        jLabel17.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel17.setText("Docentes Inscritos");
+        Docente.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, -1, -1));
+
+        TxtDocente.setPlaceholder("");
+        TxtDocente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                TxtDocenteKeyTyped(evt);
+            }
+        });
+        Docente.add(TxtDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 165, 160, 30));
+
+        add(Docente, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 220, 260, 250));
+
+        BtnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/button_eliminar.png"))); // NOI18N
+        BtnEliminar.setBorderPainted(false);
+        BtnEliminar.setContentAreaFilled(false);
+        BtnEliminar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/button_eliminar_on.png"))); // NOI18N
+        BtnEliminar.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/button_eliminar_on.png"))); // NOI18N
+        BtnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnEliminarActionPerformed(evt);
+            }
+        });
+        add(BtnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 550, 160, 40));
+        add(JpSeparador, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 490, 860, 10));
+
+        JlTexto.setText("Por favor limpie la tabla de registro de uso, cada vez que se genere los reportes");
+        add(JlTexto, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 510, -1, -1));
+
+        BtnOcultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/cerrar_ventana.png"))); // NOI18N
+        BtnOcultar.setBorderPainted(false);
+        BtnOcultar.setContentAreaFilled(false);
+        BtnOcultar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/cerrar_ventana_on.png"))); // NOI18N
+        BtnOcultar.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/cerrar_ventana_on.png"))); // NOI18N
+        BtnOcultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnOcultarActionPerformed(evt);
+            }
+        });
+        add(BtnOcultar, new org.netbeans.lib.awtextra.AbsoluteConstraints(905, 495, 30, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnAtras3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAtras3ActionPerformed
@@ -305,77 +539,128 @@ public class PanelReporte extends javax.swing.JPanel {
 
     }//GEN-LAST:event_BtnAtras3ActionPerformed
 
-    private void JlEstudianteInscritosMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JlEstudianteInscritosMouseMoved
-        // TODO add your handling code here:
-        Iniciar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-    }//GEN-LAST:event_JlEstudianteInscritosMouseMoved
-
-    private void JlEstudianteInscritosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JlEstudianteInscritosMouseClicked
-        // TODO add your handling code here:
-        
-        GenerarReporteEstudiante();
-
-
-    }//GEN-LAST:event_JlEstudianteInscritosMouseClicked
-
-    private void JlEstudianteInscritosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JlEstudianteInscritosMouseExited
-        // TODO add your handling code here:
-        Iniciar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-    }//GEN-LAST:event_JlEstudianteInscritosMouseExited
-
-    private void JlDocenteInscritosMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JlDocenteInscritosMouseMoved
-        // TODO add your handling code here:
-        Registrar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-    }//GEN-LAST:event_JlDocenteInscritosMouseMoved
-
-    private void JlDocenteInscritosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JlDocenteInscritosMouseClicked
-        // TODO add your handling code here:
-        GenerarReporteDocente();
-
-    }//GEN-LAST:event_JlDocenteInscritosMouseClicked
-
-    private void JlDocenteInscritosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JlDocenteInscritosMouseExited
-        // TODO add your handling code here:
-        Registrar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-    }//GEN-LAST:event_JlDocenteInscritosMouseExited
-
     private void JlReporteUsoMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JlReporteUsoMouseMoved
         // TODO add your handling code here:
-        Consultar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        ReporteUso.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
     }//GEN-LAST:event_JlReporteUsoMouseMoved
 
     private void JlReporteUsoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JlReporteUsoMouseClicked
         // TODO add your handling code here:
         GenerarReporte();
-     
+        revelar();
     }//GEN-LAST:event_JlReporteUsoMouseClicked
 
     private void JlReporteUsoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JlReporteUsoMouseExited
         // TODO add your handling code here:
-        Consultar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        ReporteUso.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
     }//GEN-LAST:event_JlReporteUsoMouseExited
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void BtnReporteUsoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnReporteUsoActionPerformed
         // TODO add your handling code here:
+        GenerarReporteUsoBusqueda();
+        revelar();
 
+    }//GEN-LAST:event_BtnReporteUsoActionPerformed
+
+    private void JlEstudianteInscritos1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JlEstudianteInscritos1MouseMoved
+        // TODO add your handling code here:
+        EstudianteInscritos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+      
+    }//GEN-LAST:event_JlEstudianteInscritos1MouseMoved
+
+    private void JlEstudianteInscritos1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JlEstudianteInscritos1MouseClicked
+        // TODO add your handling code here:
+        GenerarReporteEstudiante();
+    }//GEN-LAST:event_JlEstudianteInscritos1MouseClicked
+
+    private void JlEstudianteInscritos1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JlEstudianteInscritos1MouseExited
+        // TODO add your handling code here:
+        EstudianteInscritos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+    }//GEN-LAST:event_JlEstudianteInscritos1MouseExited
+
+    private void BtnGenerarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnGenerarEstudianteActionPerformed
+        // TODO add your handling code here:
         GenerarReporteEstudianteBusqueda();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_BtnGenerarEstudianteActionPerformed
+
+    private void BtnGenerarDocenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnGenerarDocenteActionPerformed
+        // TODO add your handling code here:
+        GenerarReporteDocenteBusqueda();
+    }//GEN-LAST:event_BtnGenerarDocenteActionPerformed
+
+    private void JlDocenteInscritos1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JlDocenteInscritos1MouseMoved
+        // TODO add your handling code here:
+        DocenteInscritos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+    }//GEN-LAST:event_JlDocenteInscritos1MouseMoved
+
+    private void JlDocenteInscritos1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JlDocenteInscritos1MouseClicked
+        // TODO add your handling code here:
+        GenerarReporteDocente();
+    }//GEN-LAST:event_JlDocenteInscritos1MouseClicked
+
+    private void JlDocenteInscritos1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JlDocenteInscritos1MouseExited
+        // TODO add your handling code here:
+         DocenteInscritos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+    }//GEN-LAST:event_JlDocenteInscritos1MouseExited
+
+    private void TxtEstudianteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtEstudianteKeyTyped
+        // TODO add your handling code here:
+        String nuestroTexto = TxtReporteUso.getText();
+        if (nuestroTexto.length()>0){
+            char primeraLetra = nuestroTexto.charAt(0);
+            nuestroTexto = Character.toUpperCase(primeraLetra)+nuestroTexto.substring(1,nuestroTexto.length());
+            TxtReporteUso.setText(nuestroTexto);
+        }
+    }//GEN-LAST:event_TxtEstudianteKeyTyped
+
+    private void TxtDocenteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtDocenteKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TxtDocenteKeyTyped
+
+    private void TxtReporteUsoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtReporteUsoKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TxtReporteUsoKeyTyped
+
+    private void BtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEliminarActionPerformed
+        // TODO add your handling code here:
+        eliminar();
+    }//GEN-LAST:event_BtnEliminarActionPerformed
+
+    private void BtnOcultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnOcultarActionPerformed
+        // TODO add your handling code here:
+        revelar();
+    }//GEN-LAST:event_BtnOcultarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnAtras3;
-    private javax.swing.JLabel Consultar;
-    private javax.swing.JLabel Iniciar;
-    private javax.swing.JLabel JlDocenteInscritos;
-    private javax.swing.JLabel JlEstudianteInscritos;
+    private javax.swing.JButton BtnEliminar;
+    private javax.swing.JButton BtnGenerarDocente;
+    private javax.swing.JButton BtnGenerarEstudiante;
+    private javax.swing.JButton BtnOcultar;
+    private javax.swing.JButton BtnReporteUso;
+    private javax.swing.JPanel Docente;
+    private javax.swing.JLabel DocenteInscritos;
+    private javax.swing.JPanel Estudiante;
+    private javax.swing.JLabel EstudianteInscritos;
+    private javax.swing.JLabel JlDocenteInscritos1;
+    private javax.swing.JLabel JlEstudianteInscritos1;
     private javax.swing.JLabel JlReporteUso;
-    private javax.swing.JLabel Registrar;
-    private javax.swing.JTextField TxtCodigo;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel JlTexto;
+    private javax.swing.JSeparator JpSeparador;
+    private javax.swing.JPanel Reporte;
+    private javax.swing.JLabel ReporteUso;
+    private rscomponentshade.RSTextFieldShade TxtDocente;
+    private rscomponentshade.RSTextFieldShade TxtEstudiante;
+    private rscomponentshade.RSTextFieldShade TxtReporteUso;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     // End of variables declaration//GEN-END:variables
+conectar cc2= new conectar();
+java.sql.Connection cn= cc2.conexion();
 }

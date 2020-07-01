@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -43,7 +44,7 @@ public class PanelRegistrarEstudiante extends javax.swing.JPanel{
     PanelOpcionesRegistro p1 =  null;
     boolean a = true;
     boolean b = true;
-
+    ModelTableEstudiante modelo2;
 
     
     public String id;
@@ -51,6 +52,7 @@ public class PanelRegistrarEstudiante extends javax.swing.JPanel{
     private int longitudBytes;
     private ControllerEstudiante cc;
     private Estudiante cl;
+
     
     
     
@@ -68,8 +70,8 @@ public class PanelRegistrarEstudiante extends javax.swing.JPanel{
         bloquear();
         
         cc = new ControllerEstudiante();
-        
-        JTableRegistro.setModel(new ModelTableEstudiante(cc.getEstudiante()));
+        modelo2 = new ModelTableEstudiante(cc.getEstudiante());
+        JTableRegistro.setModel(modelo2);
         
         JTableRegistro.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
         JTableRegistro.getTableHeader().setOpaque(false);
@@ -77,10 +79,10 @@ public class PanelRegistrarEstudiante extends javax.swing.JPanel{
         JTableRegistro.getTableHeader().setForeground(new Color(255,255,255));
         JTableRegistro.setRowHeight(25);
         JTableRegistro.setAlignmentX(SwingConstants.CENTER);
-        JTableRegistro.getColumn("Codigo").setPreferredWidth(40);
-        JTableRegistro.getColumn("Codigo Plan").setPreferredWidth(45);
-        JTableRegistro.getColumn("Documento Identidad").setPreferredWidth(110);
-        JTableRegistro.getColumn("Email").setPreferredWidth(110);
+//        JTableRegistro.getColumn("Codigo").setPreferredWidth(40);
+//        JTableRegistro.getColumn("Codigo Plan").setPreferredWidth(45);
+//        JTableRegistro.getColumn("Documento Identidad").setPreferredWidth(110);
+//        JTableRegistro.getColumn("Email").setPreferredWidth(110);
         
         jPassword.setVisible(false);
         JPassword.setVisible(false);
@@ -133,10 +135,10 @@ public class PanelRegistrarEstudiante extends javax.swing.JPanel{
         this.TxtNombres.setText("");
         this.TxtApellidos.setText("");
         this.TxtEmail.setText("");
-        this.JComboBoxGenero.setSelectedItem(0);
-        this.JComboBoxTipoUsuario.setSelectedItem(0);
+        this.JComboBoxGenero.setSelectedItem("");
+        this.JComboBoxTipoUsuario.setSelectedItem("");
         this.JPassword.setText("");
-        JLFoto.setIcon(new CustomImageIcon(getClass().getResource("/Imagenes/icons8-usuario-de-género-neutro-96.png")));
+        JLFoto.setIcon(new CustomImageIcon(getClass().getResource("/Imagenes/icons8-usuario-de-genero-neutro-96.png")));
         this.fis = null;
         this.longitudBytes = 0;
         
@@ -152,9 +154,13 @@ public class PanelRegistrarEstudiante extends javax.swing.JPanel{
     }
    @SuppressWarnings("unchecked")
    void mostrarusuarios(String valor){
-   String mostrar="SELECT * FROM registro WHERE CONCAT(Codigo,CodigoPlan,DocumentoIdentidad,Nombres,Apellidos,Email,Genero,TipoUsuario,Password,Foto) LIKE '%"+valor+"%'";    
-   String [] titulos= {"Codigo","Codigo Plan","Documento Identidad","Nombres","Apellidos","Email","Genero","Tipo Usuario"};
-   modelo=new  DefaultTableModel(null,titulos);   
+   String mostrar="SELECT * FROM registro WHERE CONCAT(Codigo,CodigoPlan,DocumentoIdentidad,Nombres,Apellidos,"
+                                + "Email,Genero,TipoUsuario,Password,Foto) LIKE '%"+valor+"%'";    
+   String [] titulos= {"Codigo","Codigo Plan","DI","Nombres","Apellidos","Email","Genero","Tipo Usuario"};
+
+   //modelo=new  DefaultTableModel(null,titulos);
+//   cl = ((ModelTableEstudiante)JTableRegistro.getModel()).getFila(fila);
+    ArrayList<Estudiante> estudiante = new ArrayList<>();
    String datos []= new String[10];
    String sql="SELECT * FROM  registro"; 
         try {
@@ -162,22 +168,39 @@ public class PanelRegistrarEstudiante extends javax.swing.JPanel{
             ResultSet rs = st.executeQuery(mostrar);
             while(rs.next())
             {
-                datos[0] = rs.getString("Codigo");
-                datos[1] = rs.getString("CodigoPlan");
-                datos[2] = rs.getString("DocumentoIdentidad");
-                datos[3] = rs.getString("Nombres");
-                datos[4] = rs.getString("Apellidos");
-                datos[5] = rs.getString("Email");
-                datos[6] = rs.getString("Genero");
-                datos[7] = rs.getString("TipoUsuario");
-                datos[8] = rs.getString("Password");
-                datos[9] = rs.getBlob("Foto").toString();
+//                datos[0] = rs.getString("Codigo");
+//                datos[1] = rs.getString("CodigoPlan");
+//                datos[2] = rs.getString("DocumentoIdentidad");
+//                datos[3] = rs.getString("Nombres");
+//                datos[4] = rs.getString("Apellidos");
+//                datos[5] = rs.getString("Email");
+//                datos[6] = rs.getString("Genero");
+//                datos[7] = rs.getString("TipoUsuario");
+//                datos[8] = rs.getString("Password");
+//                datos[9] = rs.getBlob("Foto").toString();
+                cl = new Estudiante();
+//                cl.setPrimaryKey(rs.getInt(1));
+                cl.setCodigo(rs.getString("Codigo"));
+                cl.setCodigoPlan(rs.getString("CodigoPlan"));
+                cl.setDocumentoIdentidad(rs.getString("DocumentoIdentidad"));
+                cl.setNombres(rs.getString("Nombres"));
+                cl.setApellidos(rs.getString("Apellidos"));
+                cl.setEmail(rs.getString("Email"));
+                cl.setGenero(rs.getString("Genero"));
+                cl.setTipoUsuario(rs.getString("TipoUsuario"));
+                cl.setPassword(rs.getString("Password"));
+                cl.setFoto2(rs.getBinaryStream("Foto"));
+                estudiante.add(cl);
                 
                         
-                modelo.addRow(datos);
+                  //modelo.addRow(datos);
+                  //modelo2.actulizarDatos(estudiante);
+                  modelo2 = new ModelTableEstudiante(estudiante);
+                  
             }
-            JTableRegistro.setModel(modelo);
-       } catch (Exception e) {
+                 JTableRegistro.setModel(modelo2);
+            
+       } catch (SQLException e) {
              JOptionPane.showMessageDialog(this,e);
 
         }
@@ -194,70 +217,109 @@ public class PanelRegistrarEstudiante extends javax.swing.JPanel{
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        TxtCodigo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        TxtCodigoPlan = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        TxtDocumIdentidad = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        TxtNombres = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        TxtApellidos = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        TxtEmail = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        JComboBoxGenero = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
-        JComboBoxTipoUsuario = new javax.swing.JComboBox<>();
         jPassword = new javax.swing.JLabel();
-        JPassword = new javax.swing.JPasswordField();
         RevelarContraseña = new javax.swing.JButton();
+        TxtCodigo = new rscomponentshade.RSTextFieldShade();
+        TxtCodigoPlan = new rscomponentshade.RSTextFieldShade();
+        TxtDocumIdentidad = new rscomponentshade.RSTextFieldShade();
+        TxtNombres = new rscomponentshade.RSTextFieldShade();
+        TxtApellidos = new rscomponentshade.RSTextFieldShade();
+        TxtEmail = new rscomponentshade.RSTextFieldShade();
+        JComboBoxGenero = new RSMaterialComponent.RSComboBoxMaterial();
+        JComboBoxTipoUsuario = new RSMaterialComponent.RSComboBoxMaterial();
+        JPassword = new rscomponentshade.RSPassFieldShade();
         JLFoto = new javax.swing.JLabel();
         BtnNuevo = new javax.swing.JButton();
         BtnRegistrar = new javax.swing.JButton();
         BtnActualizar = new javax.swing.JButton();
         BtnEliminar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
-        TxtBuscar = new javax.swing.JTextField();
         BtnMostrarTodos = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         JTableRegistro = new javax.swing.JTable();
+        TxtBuscar = new rscomponentshade.RSTextFieldShade();
         BtnCancelar = new javax.swing.JButton();
         BtnAtras = new javax.swing.JButton();
         BtnConfiguracion = new javax.swing.JButton();
 
         setLayout(null);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Registro Estudiante"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Registro Estudiante", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Codigo:");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, -1, -1));
 
-        TxtCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                TxtCodigoKeyTyped(evt);
-            }
-        });
-        jPanel1.add(TxtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(472, 37, 152, -1));
-
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setText("Codigo Plan:");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 80, -1, -1));
-
-        TxtCodigoPlan.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                TxtCodigoPlanKeyTyped(evt);
-            }
-        });
-        jPanel1.add(TxtCodigoPlan, new org.netbeans.lib.awtextra.AbsoluteConstraints(472, 77, 152, -1));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setText("Documento Identidad:");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 120, -1, -1));
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel4.setText("Nombres:");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(49, 217, -1, -1));
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel5.setText("Apellidos:");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(49, 257, -1, -1));
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel6.setText("E-mail:");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(49, 297, -1, -1));
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel7.setText("Genero:");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(49, 337, -1, -1));
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel8.setText("Tipo de Usuario:");
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(49, 379, -1, -1));
+
+        jPassword.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jPassword.setText("Password:");
+        jPanel1.add(jPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(49, 421, -1, -1));
+
+        RevelarContraseña.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/eye_solid.png"))); // NOI18N
+        RevelarContraseña.setBorderPainted(false);
+        RevelarContraseña.setContentAreaFilled(false);
+        RevelarContraseña.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RevelarContraseñaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(RevelarContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(492, 425, 35, 30));
+
+        TxtCodigo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        TxtCodigo.setPlaceholder("");
+        TxtCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                TxtCodigoKeyTyped(evt);
+            }
+        });
+        jPanel1.add(TxtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(472, 37, 160, 30));
+
+        TxtCodigoPlan.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        TxtCodigoPlan.setPlaceholder("");
+        TxtCodigoPlan.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                TxtCodigoPlanKeyTyped(evt);
+            }
+        });
+        jPanel1.add(TxtCodigoPlan, new org.netbeans.lib.awtextra.AbsoluteConstraints(472, 77, 160, 30));
+
+        TxtDocumIdentidad.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        TxtDocumIdentidad.setPlaceholder("");
         TxtDocumIdentidad.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 TxtDocumIdentidadKeyReleased(evt);
@@ -266,61 +328,46 @@ public class PanelRegistrarEstudiante extends javax.swing.JPanel{
                 TxtDocumIdentidadKeyTyped(evt);
             }
         });
-        jPanel1.add(TxtDocumIdentidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(472, 117, 152, -1));
+        jPanel1.add(TxtDocumIdentidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(472, 117, 160, 30));
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel4.setText("Nombres:");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(49, 217, -1, -1));
-
+        TxtNombres.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        TxtNombres.setPlaceholder("");
         TxtNombres.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TxtNombresKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 TxtNombresKeyTyped(evt);
             }
         });
-        jPanel1.add(TxtNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(332, 217, 152, -1));
+        jPanel1.add(TxtNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(332, 217, 160, 30));
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel5.setText("Apellidos:");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(49, 257, -1, -1));
-
+        TxtApellidos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        TxtApellidos.setPlaceholder("");
         TxtApellidos.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 TxtApellidosKeyTyped(evt);
             }
         });
-        jPanel1.add(TxtApellidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(332, 257, 152, -1));
+        jPanel1.add(TxtApellidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(332, 257, 160, 30));
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel6.setText("E-mail:");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(49, 297, -1, -1));
-        jPanel1.add(TxtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(332, 297, 152, -1));
+        TxtEmail.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        TxtEmail.setPlaceholder("");
+        jPanel1.add(TxtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(332, 297, 160, 30));
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel7.setText("Genero:");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(49, 337, -1, -1));
+        JComboBoxGenero.setBackground(new java.awt.Color(240, 240, 240));
+        JComboBoxGenero.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "", "Masculino", "Femenino" }));
+        JComboBoxGenero.setFont(new java.awt.Font("Roboto Bold", 0, 12)); // NOI18N
+        jPanel1.add(JComboBoxGenero, new org.netbeans.lib.awtextra.AbsoluteConstraints(332, 341, 160, 30));
 
-        JComboBoxGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "Masculino", "Femenino" }));
-        jPanel1.add(JComboBoxGenero, new org.netbeans.lib.awtextra.AbsoluteConstraints(332, 341, 152, -1));
+        JComboBoxTipoUsuario.setBackground(new java.awt.Color(240, 240, 240));
+        JComboBoxTipoUsuario.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "", "Monitor", "Estudiante" }));
+        JComboBoxTipoUsuario.setFont(new java.awt.Font("Roboto Bold", 0, 12)); // NOI18N
+        jPanel1.add(JComboBoxTipoUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(332, 383, 160, 30));
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel8.setText("Tipo de Usuario:");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(49, 379, -1, -1));
-
-        JComboBoxTipoUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "Monitor", "Estudiante" }));
-        jPanel1.add(JComboBoxTipoUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(332, 383, 152, -1));
-
-        jPassword.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jPassword.setText("Password:");
-        jPanel1.add(jPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(49, 421, -1, -1));
-        jPanel1.add(JPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(332, 425, 152, -1));
-
-        RevelarContraseña.setText("jButton1");
-        RevelarContraseña.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RevelarContraseñaActionPerformed(evt);
-            }
-        });
-        jPanel1.add(RevelarContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 420, 30, 30));
+        JPassword.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        JPassword.setPlaceholder("");
+        jPanel1.add(JPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(332, 425, 160, 30));
 
         JLFoto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         JLFoto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -386,16 +433,8 @@ public class PanelRegistrarEstudiante extends javax.swing.JPanel{
         add(BtnEliminar);
         BtnEliminar.setBounds(760, 240, 160, 50);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Base de Datos"));
-
-        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel11.setText("Busqueda: ");
-
-        TxtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                TxtBuscarKeyReleased(evt);
-            }
-        });
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Base de Datos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         BtnMostrarTodos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/button_mostrar-todo.png"))); // NOI18N
         BtnMostrarTodos.setBorderPainted(false);
@@ -407,6 +446,7 @@ public class PanelRegistrarEstudiante extends javax.swing.JPanel{
                 BtnMostrarTodosActionPerformed(evt);
             }
         });
+        jPanel2.add(BtnMostrarTodos, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 20, 156, -1));
 
         JTableRegistro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -429,44 +469,19 @@ public class PanelRegistrarEstudiante extends javax.swing.JPanel{
         });
         jScrollPane1.setViewportView(JTableRegistro);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel11)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(TxtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(BtnMostrarTodos, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(587, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                    .addContainerGap(14, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 970, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(14, Short.MAX_VALUE)))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(TxtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(193, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(BtnMostrarTodos)
-                .addGap(0, 179, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                    .addContainerGap(54, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap()))
-        );
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 71, 920, 160));
+
+        TxtBuscar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        TxtBuscar.setPlaceholder("Busqueda");
+        TxtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TxtBuscarKeyReleased(evt);
+            }
+        });
+        jPanel2.add(TxtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 160, 30));
 
         add(jPanel2);
-        jPanel2.setBounds(30, 510, 1010, 250);
+        jPanel2.setBounds(30, 510, 970, 250);
 
         BtnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/button_cancelar.png"))); // NOI18N
         BtnCancelar.setBorderPainted(false);
@@ -518,7 +533,7 @@ public class PanelRegistrarEstudiante extends javax.swing.JPanel{
            || this.TxtEmail.getText().isEmpty()
            || this.JComboBoxGenero.getSelectedIndex() == -1
            || this.JComboBoxTipoUsuario.getSelectedIndex() == -1       
-           || this.JPassword.getText().isEmpty()    )
+           || this.JPassword.getPassword().toString().isEmpty()    )
         {
 //            JOptionPane.showMessageDialog(this, "Todos los campos son "
 //                    + "obligatorios, exepto la foto");
@@ -538,7 +553,7 @@ public class PanelRegistrarEstudiante extends javax.swing.JPanel{
         cl.setEmail(TxtEmail.getText());
         cl.setGenero(JComboBoxGenero.getSelectedItem().toString());
         cl.setTipoUsuario(JComboBoxTipoUsuario.getSelectedItem().toString());
-        cl.setPassword(JPassword.getText());
+        cl.setPassword(String.valueOf(JPassword.getPassword()));
         cl.setFoto2(fis);
         int opcion = cc.insertEstudiante(cl);
         
@@ -580,7 +595,7 @@ public class PanelRegistrarEstudiante extends javax.swing.JPanel{
 
     private void BtnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnNuevoActionPerformed
         // TODO add your handling code here:
-//        JLFoto.setIcon(new CustomImageIcon(getClass().getResource("/Imagenes/icons8-usuario-de-género-neutro-96.png")));
+//        JL.setIcon(new CustomImageIcon(getClass().getResource("/Imagenes/icons8-usuario-de-género-neutro-96.png")));
         limpiar();        
         desbloquear();
         
@@ -598,7 +613,7 @@ public class PanelRegistrarEstudiante extends javax.swing.JPanel{
     cl.setEmail(TxtEmail.getText());
     cl.setGenero(JComboBoxGenero.getSelectedItem().toString());
     cl.setTipoUsuario(JComboBoxTipoUsuario.getSelectedItem().toString());
-    cl.setPassword(JPassword.getText());
+    cl.setPassword(String.valueOf(JPassword.getPassword()));
     cl.setFoto2(fis);
     int opcion = cc.actualzartEstudiante(cl);
          if(opcion != 0)
@@ -612,7 +627,7 @@ public class PanelRegistrarEstudiante extends javax.swing.JPanel{
                {
                    try {
                         fis.close();
-                      } catch (Exception e) {
+                      } catch (IOException e) {
                         JOptionPane.showMessageDialog(this,e);
 
         }
@@ -634,7 +649,7 @@ public class PanelRegistrarEstudiante extends javax.swing.JPanel{
         this.JComboBoxGenero.setSelectedItem(0);
         this.JComboBoxTipoUsuario.setSelectedItem(0);
         this.JPassword.setText("");
-        JLFoto.setIcon(new CustomImageIcon(getClass().getResource("/Imagenes/icons8-usuario-de-género-neutro-96.png")));
+        JLFoto.setIcon(new CustomImageIcon(getClass().getResource("/Imagenes/icons8-usuario-de-genero-neutro-96.png")));
         this.fis = null;
         this.longitudBytes = 0;
     }//GEN-LAST:event_BtnActualizarActionPerformed
@@ -665,12 +680,6 @@ public class PanelRegistrarEstudiante extends javax.swing.JPanel{
              bloquear();
 
     }//GEN-LAST:event_BtnEliminarActionPerformed
-
-    private void TxtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtBuscarKeyReleased
-        // TODO add your handling code here:
-       mostrarusuarios(TxtBuscar.getText());
-  
-    }//GEN-LAST:event_TxtBuscarKeyReleased
 
     private void BtnMostrarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnMostrarTodosActionPerformed
         // TODO add your handling code here:
@@ -713,7 +722,7 @@ public class PanelRegistrarEstudiante extends javax.swing.JPanel{
                             JLFoto.setIcon(new ImageIcon(foto));
 
                         }else{
-                            JLFoto.setIcon(new CustomImageIcon(getClass().getResource("/Imagenes/icons8-usuario-de-género-neutro-96.png")));
+                            JLFoto.setIcon(new CustomImageIcon(getClass().getResource("/Imagenes/icons8-usuario-de-genero-neutro-96.png")));
                         }
                             JLFoto.updateUI();
 
@@ -722,59 +731,6 @@ public class PanelRegistrarEstudiante extends javax.swing.JPanel{
                         }
                     }        
     }//GEN-LAST:event_BtnMostrarTodosActionPerformed
-
-    private void TxtCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtCodigoKeyTyped
-        // TODO add your handling code here:
-        char car = evt.getKeyChar();
-        if(TxtCodigo.getText().length()>=8) evt.consume();
-        if((car<'0' || car>'9')) evt.consume();
-    }//GEN-LAST:event_TxtCodigoKeyTyped
-
-    private void TxtCodigoPlanKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtCodigoPlanKeyTyped
-        // TODO add your handling code here:
-        char car = evt.getKeyChar();
-        if(TxtCodigoPlan.getText().length()>=8) evt.consume();
-        if((car<'0' || car>'9')) evt.consume();
-    }//GEN-LAST:event_TxtCodigoPlanKeyTyped
-
-    private void TxtDocumIdentidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtDocumIdentidadKeyTyped
-        // TODO add your handling code here:
-        char car = evt.getKeyChar();
-        if(TxtDocumIdentidad.getText().length()>=11) evt.consume();
-        if((car<'0' || car>'9')) evt.consume();
-    }//GEN-LAST:event_TxtDocumIdentidadKeyTyped
-
-    private void TxtNombresKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtNombresKeyTyped
-        // TODO add your handling code here:
-        char car = evt.getKeyChar();    
-        if((car<'a' || car>'z') && (car<'A' || car>'Z') && (car!=(char)KeyEvent.VK_SPACE))
-        {
-        evt.consume();
-        }
-        String nuestroTexto = TxtNombres.getText();
-        if (nuestroTexto.length()>0){
-            char primeraLetra = nuestroTexto.charAt(0);
-            nuestroTexto = Character.toUpperCase(primeraLetra)+nuestroTexto.substring(1,nuestroTexto.length());
-            TxtNombres.setText(nuestroTexto);
-        }
-    }//GEN-LAST:event_TxtNombresKeyTyped
-
-    private void TxtApellidosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtApellidosKeyTyped
-        // TODO add your handling code here:
-        char car = evt.getKeyChar();    
-        if((car<'a' || car>'z') && (car<'A' || car>'Z') && (car!=(char)KeyEvent.VK_SPACE))
-        {
-        evt.consume();
-        }
-        String nuestroTexto = TxtApellidos.getText();
-        if (nuestroTexto.length()>0){
-            char primeraLetra = nuestroTexto.charAt(0);
-            nuestroTexto = Character.toUpperCase(primeraLetra)+nuestroTexto.substring(1,nuestroTexto.length());
-            TxtApellidos.setText(nuestroTexto);
-        }
-        
-        
-    }//GEN-LAST:event_TxtApellidosKeyTyped
 
     private void BtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCancelarActionPerformed
         // TODO add your handling code here:
@@ -808,36 +764,6 @@ public class PanelRegistrarEstudiante extends javax.swing.JPanel{
         }
     }//GEN-LAST:event_RevelarContraseñaActionPerformed
 
-    private void JLFotoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JLFotoMouseClicked
-
-  JFileChooser se = new JFileChooser();
-        se.setFileSelectionMode(JFileChooser.FILES_ONLY);       
-        int estado = se.showOpenDialog(null);
-        if(estado == JFileChooser.APPROVE_OPTION)
-        {
-            try {
-                
-                fis =  new FileInputStream(se.getSelectedFile());
-                this.longitudBytes = (int)se.getSelectedFile().length();
-                
-                Image icono = ImageIO.read(se.getSelectedFile()).getScaledInstance(JLFoto.getWidth(), JLFoto.getHeight(), Image.SCALE_DEFAULT);
-                JLFoto.setIcon(new ImageIcon(icono));
-                JLFoto.updateUI(); 
-                
-            } catch (FileNotFoundException ex) {ex.printStackTrace();}
-            catch (IOException ex){ex.printStackTrace();}
-        }
-       
-       
-    }//GEN-LAST:event_JLFotoMouseClicked
-
-    private void TxtDocumIdentidadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtDocumIdentidadKeyReleased
-        // TODO add your handling code here:
-    String Dato;
-    Dato = this.TxtDocumIdentidad.getText();
-    this.JPassword.setText(Dato);
-    }//GEN-LAST:event_TxtDocumIdentidadKeyReleased
-
     private void JTableRegistroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableRegistroMouseClicked
         // TODO add your handling code here:
         if(JTableRegistro.getSelectedRow() != -1)
@@ -848,7 +774,7 @@ public class PanelRegistrarEstudiante extends javax.swing.JPanel{
                         int temp = 0;
                         ByteArrayOutputStream ouput = null;
                         Image foto = null;
-
+                        
                        int fila = JTableRegistro.getSelectedRow();
                        cl = ((ModelTableEstudiante)JTableRegistro.getModel()).getFila(fila);
                        id = JTableRegistro.getValueAt(fila, 0).toString();
@@ -877,7 +803,7 @@ public class PanelRegistrarEstudiante extends javax.swing.JPanel{
                             JLFoto.setIcon(new ImageIcon(foto));
                           
                         }else{
-                            JLFoto.setIcon(new CustomImageIcon(getClass().getResource("/Imagenes/icons8-usuario-de-género-neutro-96.png")));
+                            JLFoto.setIcon(new CustomImageIcon(getClass().getResource("/Imagenes/icons8-usuario-de-genero-neutro-96.png")));
                         }
                             JLFoto.updateUI();
 
@@ -906,6 +832,94 @@ public class PanelRegistrarEstudiante extends javax.swing.JPanel{
         
     }//GEN-LAST:event_BtnConfiguracionActionPerformed
 
+    private void TxtCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtCodigoKeyTyped
+        // TODO add your handling code here:
+        char car = evt.getKeyChar();
+        if(TxtCodigo.getText().length()>=8) evt.consume();
+        if((car<'0' || car>'9')) evt.consume();
+    }//GEN-LAST:event_TxtCodigoKeyTyped
+
+    private void TxtCodigoPlanKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtCodigoPlanKeyTyped
+        // TODO add your handling code here:
+        char car = evt.getKeyChar();
+        if(TxtCodigoPlan.getText().length()>=8) evt.consume();
+        if((car<'0' || car>'9')) evt.consume();
+    }//GEN-LAST:event_TxtCodigoPlanKeyTyped
+
+    private void TxtDocumIdentidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtDocumIdentidadKeyTyped
+        // TODO add your handling code here:
+        char car = evt.getKeyChar();
+        if(TxtDocumIdentidad.getText().length()>=11) evt.consume();
+        if((car<'0' || car>'9')) evt.consume();
+    }//GEN-LAST:event_TxtDocumIdentidadKeyTyped
+
+    private void TxtDocumIdentidadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtDocumIdentidadKeyReleased
+        // TODO add your handling code here:
+        String Dato;
+        Dato = this.TxtDocumIdentidad.getText();
+        this.JPassword.setText(Dato);
+    }//GEN-LAST:event_TxtDocumIdentidadKeyReleased
+
+    private void TxtNombresKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtNombresKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TxtNombresKeyReleased
+
+    private void TxtNombresKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtNombresKeyTyped
+        // TODO add your handling code here:
+                char car = evt.getKeyChar();
+        if((car<'a' || car>'z') && (car<'A' || car>'Z') && (car!=(char)KeyEvent.VK_SPACE))
+        {
+            evt.consume();
+        }
+        String nuestroTexto = TxtNombres.getText();
+        if (nuestroTexto.length()>0){
+            char primeraLetra = nuestroTexto.charAt(0);
+            nuestroTexto = Character.toUpperCase(primeraLetra)+nuestroTexto.substring(1,nuestroTexto.length());
+            TxtNombres.setText(nuestroTexto);
+        }
+    }//GEN-LAST:event_TxtNombresKeyTyped
+
+    private void TxtApellidosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtApellidosKeyTyped
+        // TODO add your handling code here:
+                char car = evt.getKeyChar();
+        if((car<'a' || car>'z') && (car<'A' || car>'Z') && (car!=(char)KeyEvent.VK_SPACE))
+        {
+            evt.consume();
+        }
+        String nuestroTexto = TxtApellidos.getText();
+        if (nuestroTexto.length()>0){
+            char primeraLetra = nuestroTexto.charAt(0);
+            nuestroTexto = Character.toUpperCase(primeraLetra)+nuestroTexto.substring(1,nuestroTexto.length());
+            TxtApellidos.setText(nuestroTexto);
+        }
+    }//GEN-LAST:event_TxtApellidosKeyTyped
+
+    private void TxtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtBuscarKeyReleased
+        // TODO add your handling code here:
+        mostrarusuarios(TxtBuscar.getText());
+    }//GEN-LAST:event_TxtBuscarKeyReleased
+
+    private void JLFotoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JLFotoMouseClicked
+
+        JFileChooser se = new JFileChooser();
+        se.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        int estado = se.showOpenDialog(null);
+        if(estado == JFileChooser.APPROVE_OPTION)
+        {
+            try {
+
+                fis =  new FileInputStream(se.getSelectedFile());
+                this.longitudBytes = (int)se.getSelectedFile().length();
+
+                Image icono = ImageIO.read(se.getSelectedFile()).getScaledInstance(JLFoto.getWidth(), JLFoto.getHeight(), Image.SCALE_DEFAULT);
+                JLFoto.setIcon(new ImageIcon(icono));
+                JLFoto.updateUI();
+
+            } catch (FileNotFoundException ex) {ex.printStackTrace();}
+            catch (IOException ex){ex.printStackTrace();}
+        }
+    }//GEN-LAST:event_JLFotoMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnActualizar;
@@ -916,21 +930,20 @@ public class PanelRegistrarEstudiante extends javax.swing.JPanel{
     private javax.swing.JButton BtnMostrarTodos;
     private javax.swing.JButton BtnNuevo;
     private javax.swing.JButton BtnRegistrar;
-    private javax.swing.JComboBox<String> JComboBoxGenero;
-    private javax.swing.JComboBox<String> JComboBoxTipoUsuario;
+    private RSMaterialComponent.RSComboBoxMaterial JComboBoxGenero;
+    private RSMaterialComponent.RSComboBoxMaterial JComboBoxTipoUsuario;
     private javax.swing.JLabel JLFoto;
-    private javax.swing.JPasswordField JPassword;
+    private rscomponentshade.RSPassFieldShade JPassword;
     private javax.swing.JTable JTableRegistro;
     private javax.swing.JButton RevelarContraseña;
-    private javax.swing.JTextField TxtApellidos;
-    private javax.swing.JTextField TxtBuscar;
-    private javax.swing.JTextField TxtCodigo;
-    private javax.swing.JTextField TxtCodigoPlan;
-    private javax.swing.JTextField TxtDocumIdentidad;
-    private javax.swing.JTextField TxtEmail;
-    private javax.swing.JTextField TxtNombres;
+    private rscomponentshade.RSTextFieldShade TxtApellidos;
+    private rscomponentshade.RSTextFieldShade TxtBuscar;
+    private rscomponentshade.RSTextFieldShade TxtCodigo;
+    private rscomponentshade.RSTextFieldShade TxtCodigoPlan;
+    private rscomponentshade.RSTextFieldShade TxtDocumIdentidad;
+    private rscomponentshade.RSTextFieldShade TxtEmail;
+    private rscomponentshade.RSTextFieldShade TxtNombres;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

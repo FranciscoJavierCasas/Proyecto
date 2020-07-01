@@ -4,6 +4,9 @@ import Clases.Docente;
 import Clases.Estudiante;
 
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -28,17 +31,17 @@ public class ConexionBase {
     private static PreparedStatement ps = null;    
     private static ResultSet rs = null;
     
-    private static String servidor = "localhost";
-    private static String nombreBD = "sistema";
-    private static String usuario = "postgres";
-    private static String clave = "1062313119";
+    static String servidor = "";
+    static String url = "";
+    static String usuario = "";
+    static String clave = "";
 
     public static String getNombreBD() {
-        return nombreBD;
+        return url;
     }
 
     public static void setNombreBD(String nombreBD) {
-        ConexionBase.nombreBD = nombreBD;
+        ConexionBase.url = nombreBD;
     }
 
     public static String getUsuario() {
@@ -61,42 +64,107 @@ public class ConexionBase {
     
     public static boolean conectar()
     { 
-        try{
-            Class.forName("org.postgresql.Driver");
-            String url = "jdbc:postgresql://"+servidor+":5432/"+nombreBD;
-
-            
-            cn = DriverManager.getConnection(url, usuario, clave);
-            
-        }catch(ClassNotFoundException ex){ex.printStackTrace();}        
-        catch(SQLException ex){
-            String msg = "";
-            if(ex.getErrorCode() == 1049)
-            {
-                msg = "La base de datos: "+nombreBD+" no existe.";
-            }else if(ex.getErrorCode() == 1044)
-            {
-                msg = "El usuario: "+usuario+" no existe.";
-            }else if(ex.getErrorCode() == 1045)
-            {
-                msg = "Contraseña incorrecta.";
-            }else if(ex.getErrorCode() == 0)
-            {
-                msg = "La conexion con la base de datos no se puede realizar.\nParece que el servidor de base de datos no esta activo.";
+//        File archivo = new File ("./src/ArchivoTexto/Conexion.txt");
+          File archivo = new File ("./Conexion.txt");
+        if(archivo.exists() && archivo.isFile()){
+            try{
+                    BufferedReader leer = new BufferedReader(new FileReader(archivo));
+                    String linea = "";
+                    if(leer.ready()){
+                        linea = leer.readLine();
+                    }
+                    if (linea != null){
+                        try{
+                            String [] desglose = linea.split(",");
+                            servidor = desglose[0];
+                            url = desglose[1];
+                            usuario = desglose[2];
+                            clave = desglose[3];
+                            
+                            Class.forName("org.postgresql.Driver");
+//                          String url = "jdbc:postgresql://"+servidor+":5432/"+nombreBD;
+//                          String [] ar = archivo.split
+                            cn = DriverManager.getConnection(servidor+":"+url,usuario,clave);
+//                            cn=DriverManager.getConnection("jdbc:postgresql://localhost:5432/sistema","postgres","1062313119");
+//                          cn = DriverManager.getConnection(url, usuario, clave);
+                            
+                            }catch(ClassNotFoundException ex){ex.printStackTrace();}        
+                             catch(SQLException ex){
+                                ex.printStackTrace();
+                                System.out.println("los datos de conexion no estan"+ex);
+                                 String msg = "";
+                                    if(ex.getErrorCode() == 1049)
+                                    {
+                                        msg = "La base de datos: "+url+" no existe.";
+                                    }else if(ex.getErrorCode() == 1044)
+                                    {
+                                        msg = "El usuario: "+usuario+" no existe.";
+                                    }else if(ex.getErrorCode() == 1045)
+                                    {
+                                        msg = "Contraseña incorrecta.";
+                                    }else if(ex.getErrorCode() == 0)
+                                    {
+                                        msg = "La conexion con la base de datos no se puede realizar.\nParece que el servidor de base de datos no esta activo.";
+                                    }
+                                    JOptionPane.showMessageDialog(null, msg, ex.getMessage(), JOptionPane.ERROR_MESSAGE);
+                                    return false;                   
+                            }
+                        if(cn != null)
+                            {
+                                System.out.println("Conexion Exitosa.... XD");
+                                return true;
+                            }
+                            return false;
+                    }
+                    if(clave == null){
+                        clave = "";
+                    }
+                    
+            }catch(Exception ex){
+                    ex.printStackTrace();
             }
-            JOptionPane.showMessageDialog(null, msg, ex.getMessage(), JOptionPane.ERROR_MESSAGE);
-            return false;
+        }else{
+            System.out.println("Conexion de archivo no existe");
+            System.out.println(archivo);
         }
-        
-        
-        if(cn != null)
-        {
-             System.out.println("Conexion Exitosa.... XD");
-             return true;
-        }
+//        try{
+//            Class.forName("org.postgresql.Driver");
+////            String url = "jdbc:postgresql://"+servidor+":5432/"+nombreBD;
+////            String [] ar = archivo.split
+//            cn=DriverManager.getConnection("jdbc:postgresql://localhost:5432/sistema","postgres","1062313119");
+////            cn = DriverManager.getConnection(url, usuario, clave);
+//            
+//        }catch(ClassNotFoundException ex){ex.printStackTrace();}        
+//        catch(SQLException ex){
+//            String msg = "";
+//            if(ex.getErrorCode() == 1049)
+//            {
+//                msg = "La base de datos: "+nombreBD+" no existe.";
+//            }else if(ex.getErrorCode() == 1044)
+//            {
+//                msg = "El usuario: "+usuario+" no existe.";
+//            }else if(ex.getErrorCode() == 1045)
+//            {
+//                msg = "Contraseña incorrecta.";
+//            }else if(ex.getErrorCode() == 0)
+//            {
+//                msg = "La conexion con la base de datos no se puede realizar.\nParece que el servidor de base de datos no esta activo.";
+//            }
+//            JOptionPane.showMessageDialog(null, msg, ex.getMessage(), JOptionPane.ERROR_MESSAGE);
+//            return false;
+//        }
+//        
+//        
+//        if(cn != null)
+//        {
+//             System.out.println("Conexion Exitosa.... XD");
+//             return true;
+//        }
+//        return false;
         return false;
            
     }
+    
 /////////////////////////Docente////////////////////////////////    
    @SuppressWarnings("unchecked") 
    public static ArrayList<Docente> getDocente(String consulta)

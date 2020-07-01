@@ -41,6 +41,7 @@ public class PanelAjustesDocente extends javax.swing.JPanel {
 
     InterfazInicio inicio;
     PanelDocente p1 = null;
+    PanelInvitado p2 = null;
     boolean a = true;
     
     public String id;
@@ -191,7 +192,7 @@ public class PanelAjustesDocente extends javax.swing.JPanel {
              
             ps = (PreparedStatement) cn.prepareStatement(SQL);
 
-            ps.setString(1, JPassword.getText());
+            ps.setString(1, String.valueOf(JPassword.getPassword()));
             ps.setBytes(2, imgByte);
 //            if (fis != null){
 //            ps.setBinaryStream(2, fis);
@@ -244,18 +245,21 @@ public class PanelAjustesDocente extends javax.swing.JPanel {
         BtnCargarFoto = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         BtnActualizar2 = new javax.swing.JButton();
-        JPassword = new javax.swing.JPasswordField();
+        JPassword = new rscomponentshade.RSPassFieldShade();
         RevelarContraseña = new javax.swing.JButton();
         BtnAtras1 = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Configuracion"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Configuracion", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel9.setText("Password:");
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 273, -1, -1));
 
         JLFoto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.add(JLFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(112, 27, 133, 153));
 
         BtnCargarFoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/button_cargar-foto.png"))); // NOI18N
         BtnCargarFoto.setBorderPainted(false);
@@ -267,6 +271,7 @@ public class PanelAjustesDocente extends javax.swing.JPanel {
                 BtnCargarFotoActionPerformed(evt);
             }
         });
+        jPanel1.add(BtnCargarFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 198, 148, -1));
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/button_tomar-foto.png"))); // NOI18N
         jButton6.setBorderPainted(false);
@@ -278,6 +283,7 @@ public class PanelAjustesDocente extends javax.swing.JPanel {
                 jButton6ActionPerformed(evt);
             }
         });
+        jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 198, 149, -1));
 
         BtnActualizar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/button_actualizar.png"))); // NOI18N
         BtnActualizar2.setBorderPainted(false);
@@ -289,61 +295,21 @@ public class PanelAjustesDocente extends javax.swing.JPanel {
                 BtnActualizar2ActionPerformed(evt);
             }
         });
+        jPanel1.add(BtnActualizar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 309, 160, 50));
 
-        RevelarContraseña.setText("jButton1");
+        JPassword.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        JPassword.setPlaceholder("");
+        jPanel1.add(JPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 270, 180, 30));
+
+        RevelarContraseña.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/eye_solid.png"))); // NOI18N
+        RevelarContraseña.setBorderPainted(false);
+        RevelarContraseña.setContentAreaFilled(false);
         RevelarContraseña.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 RevelarContraseñaActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(106, 106, 106)
-                        .addComponent(JLFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(BtnCargarFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(JPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(RevelarContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(94, 94, 94)
-                .addComponent(BtnActualizar2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(84, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(JLFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(BtnCargarFoto)
-                    .addComponent(jButton6))
-                .addGap(25, 25, 25)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(JPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(RevelarContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(BtnActualizar2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
-        );
+        jPanel1.add(RevelarContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 269, 35, 30));
 
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 20, 350, 380));
 
@@ -372,6 +338,13 @@ public class PanelAjustesDocente extends javax.swing.JPanel {
         PanelPrincipal.repaint();
         }
         else{
+            p2 = new PanelInvitado(inicio);
+            p2.setSize(1090, 1000);//tamaño del Jpanel
+            p2.setLocation(5, 5); // posicion del panel principal
+            PanelPrincipal.removeAll();
+            PanelPrincipal.add(p2, BorderLayout.CENTER);
+            PanelPrincipal.revalidate();
+            PanelPrincipal.repaint();
             
         }
     }//GEN-LAST:event_BtnAtras1ActionPerformed
@@ -408,7 +381,13 @@ public class PanelAjustesDocente extends javax.swing.JPanel {
         }
        
     }//GEN-LAST:event_BtnCargarFotoActionPerformed
-    @SuppressWarnings("unchecked")
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        InterfazWebCamDocente interfazwebcam = new InterfazWebCamDocente(this);
+        interfazwebcam.setVisible(true);
+    }//GEN-LAST:event_jButton6ActionPerformed
+
     private void RevelarContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RevelarContraseñaActionPerformed
         // TODO add your handling code here:
 
@@ -422,19 +401,13 @@ public class PanelAjustesDocente extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_RevelarContraseñaActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-        InterfazWebCamDocente interfazwebcam = new InterfazWebCamDocente(this);
-        interfazwebcam.setVisible(true);
-    }//GEN-LAST:event_jButton6ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnActualizar2;
     private javax.swing.JButton BtnAtras1;
     private javax.swing.JButton BtnCargarFoto;
     private javax.swing.JLabel JLFoto;
-    private javax.swing.JPasswordField JPassword;
+    private rscomponentshade.RSPassFieldShade JPassword;
     private javax.swing.JButton RevelarContraseña;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel9;

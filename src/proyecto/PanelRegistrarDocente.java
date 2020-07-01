@@ -28,6 +28,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import static proyecto.InterfazInicio.PanelPrincipal;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import rojerusan.RSNotifyAnimated;
 /**
  *
@@ -40,6 +41,7 @@ InterfazInicio inicio;
 PanelOpcionesRegistro p1 = null;
 boolean a = true;
 boolean b = true;
+ModelTableDocente modelo2;
 
  public String id;
     private FileInputStream fis;
@@ -60,7 +62,8 @@ boolean b = true;
 
         cc = new ControllerDocente();
         
-        JTableDocente.setModel(new ModelTableDocente(cc.getDocente()));
+        modelo2 = new ModelTableDocente(cc.getDocente());
+        JTableDocente.setModel(modelo2);
         
         JTableDocente.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
         JTableDocente.getTableHeader().setOpaque(false);
@@ -76,9 +79,11 @@ boolean b = true;
     @SuppressWarnings("unchecked")
     void mostrarusuarios(String valor){
          
-   String mostrar="SELECT * FROM docente WHERE CONCAT(DocumentoIdentidad,Nombres,Apellidos,Email,Genero,TipoUsuario,Password,Foto) LIKE '%"+valor+"%'";    
+   String mostrar="SELECT * FROM docente WHERE CONCAT(DocumentoIdentidad,Nombres,Apellidos,"
+                    + "Email,Genero,TipoUsuario,Password,Foto) LIKE '%"+valor+"%'";    
    String [] titulos= {"Documento Identidad","Nombres","Apellidos","Email","Genero","Tipo Usuario"};
-   modelo=new  DefaultTableModel(null,titulos);   
+//   modelo=new  DefaultTableModel(null,titulos);   
+    ArrayList<Docente> docente = new ArrayList<>();
    String datos []= new String[8];
    String sql="SELECT * FROM  docente"; 
         try {
@@ -87,19 +92,30 @@ boolean b = true;
             while(rs.next())
             {
                
-                datos[0] = rs.getString("DocumentoIdentidad");
-                datos[1] = rs.getString("Nombres");
-                datos[2] = rs.getString("Apellidos");
-                datos[3] = rs.getString("Email");
-                datos[4] = rs.getString("Genero");
-                datos[5] = rs.getString("TipoUsuario");
-                datos[6] = rs.getString("Password");
-                datos[7] = rs.getBlob("Foto").toString();
-                
+//                datos[0] = rs.getString("DocumentoIdentidad");
+//                datos[1] = rs.getString("Nombres");
+//                datos[2] = rs.getString("Apellidos");
+//                datos[3] = rs.getString("Email");
+//                datos[4] = rs.getString("Genero");
+//                datos[5] = rs.getString("TipoUsuario");
+//                datos[6] = rs.getString("Password");
+//                datos[7] = rs.getBlob("Foto").toString();
+                cl = new Docente();
+//                cl.setPrimaryKey(rs.getInt(1));
+                cl.setDocumentoIdentidad(rs.getString("DocumentoIdentidad"));
+                cl.setNombres(rs.getString("Nombres"));
+                cl.setApellidos(rs.getString("Apellidos"));
+                cl.setEmail(rs.getString("Email"));
+                cl.setGenero(rs.getString("Genero"));
+                cl.setTipoUsuario(rs.getString("TipoUsuario"));
+                cl.setPassword(rs.getString("Password"));
+                cl.setFoto(rs.getBinaryStream("Foto"));
+                docente.add(cl);
                         
-                modelo.addRow(datos);
+//                modelo.addRow(datos);
+                modelo2 = new ModelTableDocente(docente);
             }
-            JTableDocente.setModel(modelo);
+            JTableDocente.setModel(modelo2);
        } catch (Exception e) {
              JOptionPane.showMessageDialog(this,e);
 
@@ -148,10 +164,10 @@ boolean b = true;
         this.TxtNombres.setText("");
         this.TxtApellidos.setText("");
         this.TxtEmail.setText("");
-        this.JComboBoxGenero.setSelectedItem(0);
-        this.JComboBoxTipoUsuario.setSelectedItem(0);
+        this.JComboBoxGenero.setSelectedItem("");
+        this.JComboBoxTipoUsuario.setSelectedItem("");
         this.JPassword.setText("");
-        JLFoto.setIcon(new CustomImageIcon(getClass().getResource("/Imagenes/icons8-usuario-de-género-neutro-96.png")));
+        JLFoto.setIcon(new CustomImageIcon(getClass().getResource("/Imagenes/icons8-usuario-de-genero-neutro-96.png")));
         this.fis = null;
         this.longitudBytes = 0;
         
@@ -177,107 +193,66 @@ boolean b = true;
 
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        TxtDocumIdentidad = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        TxtNombres = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        TxtApellidos = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        TxtEmail = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        JComboBoxGenero = new javax.swing.JComboBox<>();
         jPassword = new javax.swing.JLabel();
-        JPassword = new javax.swing.JPasswordField();
-        RevelarContraseña = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
-        JComboBoxTipoUsuario = new javax.swing.JComboBox<>();
         JLFoto = new javax.swing.JLabel();
+        TxtDocumIdentidad = new rscomponentshade.RSTextFieldShade();
+        TxtNombres = new rscomponentshade.RSTextFieldShade();
+        TxtApellidos = new rscomponentshade.RSTextFieldShade();
+        TxtEmail = new rscomponentshade.RSTextFieldShade();
+        JComboBoxGenero = new RSMaterialComponent.RSComboBoxMaterial();
+        JComboBoxTipoUsuario = new RSMaterialComponent.RSComboBoxMaterial();
+        JPassword = new rscomponentshade.RSPassFieldShade();
+        RevelarContraseña = new javax.swing.JButton();
         BtnNuevo = new javax.swing.JButton();
         BtnRegistrar = new javax.swing.JButton();
         BtnActualizar = new javax.swing.JButton();
         BtnEliminar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
-        TxtBuscar = new javax.swing.JTextField();
         BtnMostrarTodos = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         JTableDocente = new javax.swing.JTable();
+        TxtBuscar = new rscomponentshade.RSTextFieldShade();
         BtnCancelar = new javax.swing.JButton();
         BtnAtras = new javax.swing.JButton();
         BtnConfiguracion = new javax.swing.JButton();
 
         setLayout(null);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Registro Docente"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Registro Docente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setText("Documento Identidad:");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 50, -1, -1));
 
-        TxtDocumIdentidad.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                TxtDocumIdentidadKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                TxtDocumIdentidadKeyTyped(evt);
-            }
-        });
-        jPanel1.add(TxtDocumIdentidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 50, 152, -1));
-
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel4.setText("Nombres:");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 90, -1, -1));
-
-        TxtNombres.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                TxtNombresKeyTyped(evt);
-            }
-        });
-        jPanel1.add(TxtNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 90, 152, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setText("Apellidos:");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 130, -1, -1));
 
-        TxtApellidos.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                TxtApellidosKeyTyped(evt);
-            }
-        });
-        jPanel1.add(TxtApellidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 130, 152, -1));
-
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel6.setText("E-mail:");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, -1, -1));
-        jPanel1.add(TxtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 210, 152, -1));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel7.setText("Genero:");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 250, -1, -1));
 
-        JComboBoxGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "Masculino", "Femenino" }));
-        jPanel1.add(JComboBoxGenero, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 250, 152, -1));
-
         jPassword.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jPassword.setText("Password:");
         jPanel1.add(jPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 330, -1, -1));
-        jPanel1.add(JPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 330, 152, -1));
-
-        RevelarContraseña.setText("jButton1");
-        RevelarContraseña.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RevelarContraseñaActionPerformed(evt);
-            }
-        });
-        jPanel1.add(RevelarContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 320, 30, 30));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel8.setText("Tipo de Usuario:");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 290, -1, -1));
-
-        JComboBoxTipoUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "Docente", "Invitado" }));
-        jPanel1.add(JComboBoxTipoUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 290, 152, -1));
 
         JLFoto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         JLFoto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -287,6 +262,68 @@ boolean b = true;
             }
         });
         jPanel1.add(JLFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 133, 153));
+
+        TxtDocumIdentidad.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        TxtDocumIdentidad.setPlaceholder("");
+        TxtDocumIdentidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TxtDocumIdentidadKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                TxtDocumIdentidadKeyTyped(evt);
+            }
+        });
+        jPanel1.add(TxtDocumIdentidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(472, 45, 160, 30));
+
+        TxtNombres.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        TxtNombres.setPlaceholder("");
+        TxtNombres.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TxtNombresKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                TxtNombresKeyTyped(evt);
+            }
+        });
+        jPanel1.add(TxtNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(472, 85, 160, 30));
+
+        TxtApellidos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        TxtApellidos.setPlaceholder("");
+        TxtApellidos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                TxtApellidosKeyTyped(evt);
+            }
+        });
+        jPanel1.add(TxtApellidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(472, 125, 160, 30));
+
+        TxtEmail.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        TxtEmail.setPlaceholder("");
+        jPanel1.add(TxtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 205, 160, 30));
+
+        JComboBoxGenero.setBackground(new java.awt.Color(240, 240, 240));
+        JComboBoxGenero.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "", "Masculino", "Femenino" }));
+        JComboBoxGenero.setFont(new java.awt.Font("Roboto Bold", 0, 12)); // NOI18N
+        jPanel1.add(JComboBoxGenero, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 245, 160, 30));
+
+        JComboBoxTipoUsuario.setBackground(new java.awt.Color(240, 240, 240));
+        JComboBoxTipoUsuario.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "", "Docente", "Invitado" }));
+        JComboBoxTipoUsuario.setToolTipText("");
+        JComboBoxTipoUsuario.setFont(new java.awt.Font("Roboto Bold", 0, 12)); // NOI18N
+        jPanel1.add(JComboBoxTipoUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 285, 160, 30));
+
+        JPassword.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        JPassword.setPlaceholder("");
+        jPanel1.add(JPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 325, 160, 30));
+
+        RevelarContraseña.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/eye_solid.png"))); // NOI18N
+        RevelarContraseña.setBorderPainted(false);
+        RevelarContraseña.setContentAreaFilled(false);
+        RevelarContraseña.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RevelarContraseñaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(RevelarContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 325, 35, 30));
 
         add(jPanel1);
         jPanel1.setBounds(30, 30, 640, 390);
@@ -343,16 +380,8 @@ boolean b = true;
         add(BtnEliminar);
         BtnEliminar.setBounds(760, 240, 160, 50);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Base de Datos"));
-
-        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel11.setText("Busqueda: ");
-
-        TxtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                TxtBuscarKeyReleased(evt);
-            }
-        });
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Base de Datos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         BtnMostrarTodos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/button_mostrar-todo.png"))); // NOI18N
         BtnMostrarTodos.setBorderPainted(false);
@@ -364,6 +393,7 @@ boolean b = true;
                 BtnMostrarTodosActionPerformed(evt);
             }
         });
+        jPanel2.add(BtnMostrarTodos, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 20, 156, -1));
 
         JTableDocente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -386,44 +416,19 @@ boolean b = true;
         });
         jScrollPane1.setViewportView(JTableDocente);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel11)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(TxtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(BtnMostrarTodos, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(587, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                    .addContainerGap(14, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 970, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(14, Short.MAX_VALUE)))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(TxtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(263, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(BtnMostrarTodos)
-                .addGap(0, 249, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                    .addContainerGap(57, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap()))
-        );
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 73, 930, 230));
+
+        TxtBuscar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        TxtBuscar.setPlaceholder("Busqueda");
+        TxtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TxtBuscarKeyReleased(evt);
+            }
+        });
+        jPanel2.add(TxtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 160, 30));
 
         add(jPanel2);
-        jPanel2.setBounds(30, 440, 1010, 320);
+        jPanel2.setBounds(30, 440, 970, 320);
 
         BtnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/button_cancelar.png"))); // NOI18N
         BtnCancelar.setBorderPainted(false);
@@ -473,11 +478,11 @@ boolean b = true;
            || this.TxtEmail.getText().isEmpty()
            || this.JComboBoxGenero.getSelectedIndex() == -1
            || this.JComboBoxTipoUsuario.getSelectedIndex() == -1       
-           || this.JPassword.getText().isEmpty()    )
+           || this.JPassword.getPassword().toString().isEmpty()    )
         {
 //            JOptionPane.showMessageDialog(this, "Todos los campos son "
 //                    + "obligatorios, exepto la foto");
-            new rojerusan.RSNotifyAnimated("INFORMACION", "Todos los campos son obligatorios, excepto la informacion", 
+            new rojerusan.RSNotifyAnimated("INFORMACION", "Todos los campos son obligatorios, excepto la foto", 
                         5, RSNotifyAnimated.PositionNotify.TopLef, RSNotifyAnimated.AnimationNotify.UpBottom, 
                         RSNotifyAnimated.TypeNotify.INFORMATION).setVisible(true);
             return;
@@ -497,7 +502,7 @@ boolean b = true;
         cl.setEmail(TxtEmail.getText());
         cl.setGenero(JComboBoxGenero.getSelectedItem().toString());
         cl.setTipoUsuario(JComboBoxTipoUsuario.getSelectedItem().toString());
-        cl.setPassword(JPassword.getText());
+        cl.setPassword(String.valueOf(JPassword.getPassword()));
         cl.setFoto(fis);
         int opcion = cc.insertDocente(cl);
         
@@ -528,7 +533,7 @@ boolean b = true;
                  if(fis != null)
                     fis.close();
                  fis = null;
-            } catch (Exception e) {
+            } catch (IOException e) {
              JOptionPane.showMessageDialog(this,e);
 
         }
@@ -553,7 +558,7 @@ boolean b = true;
     cl.setEmail(TxtEmail.getText());
     cl.setGenero(JComboBoxGenero.getSelectedItem().toString());
     cl.setTipoUsuario(JComboBoxTipoUsuario.getSelectedItem().toString());
-    cl.setPassword(JPassword.getText());
+    cl.setPassword(String.valueOf(JPassword.getPassword()));
     cl.setFoto(fis);
     int opcion = cc.actualzartDocente(cl);
          if(opcion != 0)
@@ -568,7 +573,7 @@ boolean b = true;
                {
                    try {
                         fis.close();
-                      } catch (Exception e) {
+                      } catch (IOException e) {
                         JOptionPane.showMessageDialog(this,e);
 
         }
@@ -588,7 +593,7 @@ boolean b = true;
         this.JComboBoxGenero.setSelectedItem(0);
         this.JComboBoxTipoUsuario.setSelectedItem(0);
         this.JPassword.setText("");
-        JLFoto.setIcon(new CustomImageIcon(getClass().getResource("/Imagenes/icons8-usuario-de-género-neutro-96.png")));
+        JLFoto.setIcon(new CustomImageIcon(getClass().getResource("/Imagenes/icons8-usuario-de-genero-neutro-96.png")));
         this.fis = null;
         this.longitudBytes = 0;
         
@@ -619,12 +624,6 @@ boolean b = true;
              bloquear();
     
     }//GEN-LAST:event_BtnEliminarActionPerformed
-
-    private void TxtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtBuscarKeyReleased
-        // TODO add your handling code here:
-        mostrarusuarios(TxtBuscar.getText());
-                
-    }//GEN-LAST:event_TxtBuscarKeyReleased
 
     private void BtnMostrarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnMostrarTodosActionPerformed
         // TODO add your handling code here:
@@ -676,43 +675,6 @@ boolean b = true;
       
     }//GEN-LAST:event_BtnMostrarTodosActionPerformed
 
-    private void TxtDocumIdentidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtDocumIdentidadKeyTyped
-        // TODO add your handling code here:
-        char car = evt.getKeyChar();
-        if(TxtDocumIdentidad.getText().length()>=10) evt.consume();
-        if((car<'0' || car>'9')) evt.consume();
-    }//GEN-LAST:event_TxtDocumIdentidadKeyTyped
-
-    private void TxtNombresKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtNombresKeyTyped
-        // TODO add your handling code here:
-        char car = evt.getKeyChar();    
-        if((car<'a' || car>'z') && (car<'A' || car>'Z') && (car!=(char)KeyEvent.VK_SPACE))
-        {
-        evt.consume();
-        }
-        String nuestroTexto = TxtNombres.getText();
-        if (nuestroTexto.length()>0){
-            char primeraLetra = nuestroTexto.charAt(0);
-            nuestroTexto = Character.toUpperCase(primeraLetra)+nuestroTexto.substring(1,nuestroTexto.length());
-            TxtNombres.setText(nuestroTexto);
-        }
-    }//GEN-LAST:event_TxtNombresKeyTyped
-
-    private void TxtApellidosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtApellidosKeyTyped
-        // TODO add your handling code here:
-        char car = evt.getKeyChar();    
-        if((car<'a' || car>'z') && (car<'A' || car>'Z') && (car!=(char)KeyEvent.VK_SPACE))
-        {
-        evt.consume();
-        }
-        String nuestroTexto = TxtApellidos.getText();
-        if (nuestroTexto.length()>0){
-            char primeraLetra = nuestroTexto.charAt(0);
-            nuestroTexto = Character.toUpperCase(primeraLetra)+nuestroTexto.substring(1,nuestroTexto.length());
-            TxtApellidos.setText(nuestroTexto);
-        }
-    }//GEN-LAST:event_TxtApellidosKeyTyped
-
     private void BtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCancelarActionPerformed
         // TODO add your handling code here:
         limpiar();
@@ -733,28 +695,6 @@ boolean b = true;
                     PanelPrincipal.revalidate();
                     PanelPrincipal.repaint();
     }//GEN-LAST:event_BtnAtrasActionPerformed
-
-    private void RevelarContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RevelarContraseñaActionPerformed
-        // TODO add your handling code here:
-                if(a){
-        JPassword.setEchoChar((char)0);
-        a = false;
-        }
-        else{
-            a = true;
-            JPassword.setEchoChar(('*'));
-        }
-        
-    }//GEN-LAST:event_RevelarContraseñaActionPerformed
-
-    private void TxtDocumIdentidadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtDocumIdentidadKeyReleased
-        // TODO add your handling code here:
-    String Dato;
-    Dato = this.TxtDocumIdentidad.getText();
-    this.JPassword.setText(Dato);
-
-     
-    }//GEN-LAST:event_TxtDocumIdentidadKeyReleased
 
     private void JTableDocenteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableDocenteMouseClicked
         // TODO add your handling code here:
@@ -793,7 +733,7 @@ boolean b = true;
                             JLFoto.setIcon(new ImageIcon(foto));
 
                         }else{
-                            JLFoto.setIcon(new CustomImageIcon(getClass().getResource("/Imagenes/icons8-usuario-de-género-neutro-96.png")));
+                            JLFoto.setIcon(new CustomImageIcon(getClass().getResource("/Imagenes/icons8-usuario-de-genero-neutro-96.png")));
                         }
                             JLFoto.updateUI();
 
@@ -842,6 +782,72 @@ boolean b = true;
 
     }//GEN-LAST:event_JLFotoMouseClicked
 
+    private void TxtDocumIdentidadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtDocumIdentidadKeyReleased
+        // TODO add your handling code here:
+        String Dato;
+        Dato = this.TxtDocumIdentidad.getText();
+        this.JPassword.setText(Dato);
+    }//GEN-LAST:event_TxtDocumIdentidadKeyReleased
+
+    private void TxtDocumIdentidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtDocumIdentidadKeyTyped
+        // TODO add your handling code here:
+        char car = evt.getKeyChar();
+        if(TxtDocumIdentidad.getText().length()>=11) evt.consume();
+        if((car<'0' || car>'9')) evt.consume();
+    }//GEN-LAST:event_TxtDocumIdentidadKeyTyped
+
+    private void TxtNombresKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtNombresKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TxtNombresKeyReleased
+
+    private void TxtNombresKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtNombresKeyTyped
+        // TODO add your handling code here:
+        char car = evt.getKeyChar();
+        if((car<'a' || car>'z') && (car<'A' || car>'Z') && (car!=(char)KeyEvent.VK_SPACE))
+        {
+            evt.consume();
+        }
+        String nuestroTexto = TxtNombres.getText();
+        if (nuestroTexto.length()>0){
+            char primeraLetra = nuestroTexto.charAt(0);
+            nuestroTexto = Character.toUpperCase(primeraLetra)+nuestroTexto.substring(1,nuestroTexto.length());
+            TxtNombres.setText(nuestroTexto);
+        }
+    }//GEN-LAST:event_TxtNombresKeyTyped
+
+    private void TxtApellidosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtApellidosKeyTyped
+        // TODO add your handling code here:
+        char car = evt.getKeyChar();
+        if((car<'a' || car>'z') && (car<'A' || car>'Z') && (car!=(char)KeyEvent.VK_SPACE))
+        {
+            evt.consume();
+        }
+        String nuestroTexto = TxtApellidos.getText();
+        if (nuestroTexto.length()>0){
+            char primeraLetra = nuestroTexto.charAt(0);
+            nuestroTexto = Character.toUpperCase(primeraLetra)+nuestroTexto.substring(1,nuestroTexto.length());
+            TxtApellidos.setText(nuestroTexto);
+        }
+    }//GEN-LAST:event_TxtApellidosKeyTyped
+
+    private void TxtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxtBuscarKeyReleased
+        // TODO add your handling code here:
+        mostrarusuarios(TxtBuscar.getText());
+    }//GEN-LAST:event_TxtBuscarKeyReleased
+
+    private void RevelarContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RevelarContraseñaActionPerformed
+        // TODO add your handling code here:
+
+        if(a){
+            JPassword.setEchoChar((char)0);
+            a = false;
+        }
+        else{
+            a = true;
+            JPassword.setEchoChar(('*'));
+        }
+    }//GEN-LAST:event_RevelarContraseñaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnActualizar;
@@ -852,18 +858,17 @@ boolean b = true;
     private javax.swing.JButton BtnMostrarTodos;
     private javax.swing.JButton BtnNuevo;
     private javax.swing.JButton BtnRegistrar;
-    private javax.swing.JComboBox<String> JComboBoxGenero;
-    private javax.swing.JComboBox<String> JComboBoxTipoUsuario;
+    private RSMaterialComponent.RSComboBoxMaterial JComboBoxGenero;
+    private RSMaterialComponent.RSComboBoxMaterial JComboBoxTipoUsuario;
     private javax.swing.JLabel JLFoto;
-    private javax.swing.JPasswordField JPassword;
+    private rscomponentshade.RSPassFieldShade JPassword;
     private javax.swing.JTable JTableDocente;
     private javax.swing.JButton RevelarContraseña;
-    private javax.swing.JTextField TxtApellidos;
-    private javax.swing.JTextField TxtBuscar;
-    private javax.swing.JTextField TxtDocumIdentidad;
-    private javax.swing.JTextField TxtEmail;
-    private javax.swing.JTextField TxtNombres;
-    private javax.swing.JLabel jLabel11;
+    private rscomponentshade.RSTextFieldShade TxtApellidos;
+    private rscomponentshade.RSTextFieldShade TxtBuscar;
+    private rscomponentshade.RSTextFieldShade TxtDocumIdentidad;
+    private rscomponentshade.RSTextFieldShade TxtEmail;
+    private rscomponentshade.RSTextFieldShade TxtNombres;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

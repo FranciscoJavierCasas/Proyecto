@@ -44,8 +44,8 @@ public final class InterfazWebCam extends javax.swing.JFrame {
     public InterfazWebCam(PanelAjustesEstudiante foto) {
         initComponents();
         ////////////////////////////////////////
-        jLabel1.setBackground(Color.gray);
-        jLabel1.setOpaque(true);
+//        jLabel1.setBackground(Color.gray);
+//        jLabel1.setOpaque(true);
         /////////////////////////////////////
         f = foto;
         setLocationRelativeTo(null);
@@ -88,26 +88,39 @@ public final class InterfazWebCam extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        rSPanelShadow1 = new necesario.RSPanelShadow();
         jPanel2 = new javax.swing.JPanel();
         JPanelCamara = new javax.swing.JPanel();
         JblFotoTomada = new javax.swing.JLabel();
         BtnCapturarFoto = new javax.swing.JButton();
         BtnGuardarFoto = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
-        jLabel1 = new javax.swing.JLabel();
-        BtnCerrar = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
         BtnIniciar = new javax.swing.JButton();
         BtnApagar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         JblNombreCamara = new javax.swing.JLabel();
+        BtnCerrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        rSPanelShadow1.setBackground(new java.awt.Color(255, 255, 255));
+        rSPanelShadow1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                rSPanelShadow1MouseDragged(evt);
+            }
+        });
+        rSPanelShadow1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                rSPanelShadow1MousePressed(evt);
+            }
+        });
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setVerifyInputWhenFocusTarget(false);
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         JPanelCamara.setBackground(new java.awt.Color(0, 0, 0));
@@ -134,8 +147,8 @@ public final class InterfazWebCam extends javax.swing.JFrame {
         BtnCapturarFoto.setBorderPainted(false);
         BtnCapturarFoto.setContentAreaFilled(false);
         BtnCapturarFoto.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/button_capturar_On.png"))); // NOI18N
-        BtnCapturarFoto.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/button_apagar_On.png"))); // NOI18N
-        BtnCapturarFoto.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/button_apagar_On.png"))); // NOI18N
+        BtnCapturarFoto.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/button_capturar_On.png"))); // NOI18N
+        BtnCapturarFoto.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/button_capturar_On.png"))); // NOI18N
         BtnCapturarFoto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnCapturarFotoActionPerformed(evt);
@@ -159,34 +172,6 @@ public final class InterfazWebCam extends javax.swing.JFrame {
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(607, 30, -1, 430));
 
-        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel1.setText("Camara");
-        jLabel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseDragged(java.awt.event.MouseEvent evt) {
-                jLabel1MouseDragged(evt);
-            }
-        });
-        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel1MousePressed(evt);
-            }
-        });
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, 30));
-
-        BtnCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/button_x.png"))); // NOI18N
-        BtnCerrar.setBorderPainted(false);
-        BtnCerrar.setContentAreaFilled(false);
-        BtnCerrar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/button_x_On.png"))); // NOI18N
-        BtnCerrar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/button_x_On.png"))); // NOI18N
-        BtnCerrar.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/button_x_On.png"))); // NOI18N
-        BtnCerrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnCerrarActionPerformed(evt);
-            }
-        });
-        jPanel2.add(BtnCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 0, 32, 30));
-
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 30, -1, 430));
 
@@ -195,7 +180,7 @@ public final class InterfazWebCam extends javax.swing.JFrame {
         BtnIniciar.setContentAreaFilled(false);
         BtnIniciar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/button_iniciar_On.png"))); // NOI18N
         BtnIniciar.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/button_iniciar_On.png"))); // NOI18N
-        BtnIniciar.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/button_apagar_On.png"))); // NOI18N
+        BtnIniciar.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/button_iniciar_On.png"))); // NOI18N
         BtnIniciar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnIniciarActionPerformed(evt);
@@ -225,10 +210,56 @@ public final class InterfazWebCam extends javax.swing.JFrame {
         JblNombreCamara.setText("-");
         jPanel2.add(JblNombreCamara, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, 190, -1));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 470));
+        BtnCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/cerrar_ventana.png"))); // NOI18N
+        BtnCerrar.setBorderPainted(false);
+        BtnCerrar.setContentAreaFilled(false);
+        BtnCerrar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/cerrar_ventana_on.png"))); // NOI18N
+        BtnCerrar.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Botones/cerrar_ventana_on.png"))); // NOI18N
+        BtnCerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnCerrarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(BtnCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 0, 32, 30));
+
+        javax.swing.GroupLayout rSPanelShadow1Layout = new javax.swing.GroupLayout(rSPanelShadow1);
+        rSPanelShadow1.setLayout(rSPanelShadow1Layout);
+        rSPanelShadow1Layout.setHorizontalGroup(
+            rSPanelShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 822, Short.MAX_VALUE)
+            .addGroup(rSPanelShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        rSPanelShadow1Layout.setVerticalGroup(
+            rSPanelShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 470, Short.MAX_VALUE)
+            .addGroup(rSPanelShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(rSPanelShadow1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 480));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void BtnCapturarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCapturarFotoActionPerformed
+        // TODO add your handling code here:
+        BtnGuardarFoto.setEnabled(true);
+
+        ImageIcon foto;
+        ruta = webcam.getImage();
+        foto = new ImageIcon(ruta);
+        iconoFoto = new ImageIcon(foto.getImage().getScaledInstance(133, 153, Image.SCALE_DEFAULT));
+        Icon icono = new ImageIcon(foto.getImage().getScaledInstance(JblFotoTomada.getWidth(), JblFotoTomada.getHeight(), Image.SCALE_DEFAULT));
+        JblFotoTomada.setIcon(icono);
+    }//GEN-LAST:event_BtnCapturarFotoActionPerformed
+
+    private void BtnGuardarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnGuardarFotoActionPerformed
+        // TODO add your handling code here:
+
+        f.getJLFoto().setIcon(iconoFoto);
+        f.setFotoCamara(ruta);
+    }//GEN-LAST:event_BtnGuardarFotoActionPerformed
 
     private void BtnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnIniciarActionPerformed
         // TODO add your handling code here:}
@@ -245,41 +276,26 @@ public final class InterfazWebCam extends javax.swing.JFrame {
         hilo.setDaemon(true);
         hilo.start();
         BtnIniciar.setEnabled(false);
-   
-
     }//GEN-LAST:event_BtnIniciarActionPerformed
 
-
-    
     private void BtnApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnApagarActionPerformed
         // TODO add your handling code here:
         webcamPanel.stop();
         apagarBotones();
         BtnIniciar.setEnabled(true);
-        
     }//GEN-LAST:event_BtnApagarActionPerformed
 
-    private void BtnCapturarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCapturarFotoActionPerformed
+    private void rSPanelShadow1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rSPanelShadow1MouseDragged
         // TODO add your handling code here:
-        BtnGuardarFoto.setEnabled(true);
-        
-        ImageIcon foto;
-        ruta = webcam.getImage();
-        foto = new ImageIcon(ruta);
-        iconoFoto = new ImageIcon(foto.getImage().getScaledInstance(133, 153, Image.SCALE_DEFAULT));
-        Icon icono = new ImageIcon(foto.getImage().getScaledInstance(JblFotoTomada.getWidth(), JblFotoTomada.getHeight(), Image.SCALE_DEFAULT));
-        JblFotoTomada.setIcon(icono);
+        Point point = MouseInfo.getPointerInfo().getLocation();
+        setLocation(point.x - x, point.y - y);
+    }//GEN-LAST:event_rSPanelShadow1MouseDragged
 
-        
-    }//GEN-LAST:event_BtnCapturarFotoActionPerformed
-
-    private void BtnGuardarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnGuardarFotoActionPerformed
+    private void rSPanelShadow1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rSPanelShadow1MousePressed
         // TODO add your handling code here:
-               
-        f.getJLFoto().setIcon(iconoFoto);
-        f.setFotoCamara(ruta);
- 
-    }//GEN-LAST:event_BtnGuardarFotoActionPerformed
+        x = evt.getX();
+        y = evt.getY();
+    }//GEN-LAST:event_rSPanelShadow1MousePressed
 
     private void BtnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCerrarActionPerformed
         // TODO add your handling code here:
@@ -287,18 +303,8 @@ public final class InterfazWebCam extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_BtnCerrarActionPerformed
 
-    private void jLabel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MousePressed
-        x = evt.getX();
-        y = evt.getY();
-    }//GEN-LAST:event_jLabel1MousePressed
 
-    private void jLabel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseDragged
-        // TODO add your handling code here:
-        Point point = MouseInfo.getPointerInfo().getLocation();
-        setLocation(point.x - x, point.y - y);
-
-    }//GEN-LAST:event_jLabel1MouseDragged
-
+    
     /**
      * @param args the com
      * mand line arguments
@@ -344,10 +350,10 @@ public final class InterfazWebCam extends javax.swing.JFrame {
     private javax.swing.JPanel JPanelCamara;
     private javax.swing.JLabel JblFotoTomada;
     private javax.swing.JLabel JblNombreCamara;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private necesario.RSPanelShadow rSPanelShadow1;
     // End of variables declaration//GEN-END:variables
 }

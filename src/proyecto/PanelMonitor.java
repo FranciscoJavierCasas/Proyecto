@@ -18,6 +18,8 @@ PanelOpcionesConsulta pl = null;
 PanelOpcionesRegistro p2 = null;
 PanelAjustesEstudiante a1 = null;
 PanelReporte pr = null;
+
+String hora;
     /**
      * Creates new form PanelMonitor
      * @param n
@@ -274,6 +276,7 @@ PanelReporte pr = null;
         InterfazSesion interfazsesion = new InterfazSesion(inicio);
         interfazsesion.setVisible(true);
         inicio.setVisible(false);
+        
 
     }//GEN-LAST:event_JlIniciarSesionMouseClicked
 

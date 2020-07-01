@@ -41,10 +41,22 @@ public class PanelReporteTest {
      * Test of GenerarReporte method, of class PanelReporte.
      */
     @Test
-    public void testReporteDeUso() {
-        System.out.println("ReporteDeUso");
+    public void testGenerarReporte() {
+        System.out.println("GenerarReporte");
         PanelReporte instance = new PanelReporte();
         instance.GenerarReporte();
+        // TODO review the generated test code and remove the default call to fail.
+
+    }
+
+    /**
+     * Test of GenerarReporteUsoBusqueda method, of class PanelReporte.
+     */
+    @Test
+    public void testGenerarReporteUsoBusqueda() {
+        System.out.println("GenerarReporteUsoBusqueda");
+        PanelReporte instance = new PanelReporte();
+        instance.GenerarReporteUsoBusqueda();
         // TODO review the generated test code and remove the default call to fail.
 
     }
@@ -67,9 +79,8 @@ public class PanelReporteTest {
     @Test
     public void testGenerarReporteEstudianteBusqueda() {
         System.out.println("GenerarReporteEstudianteBusqueda");
-        String usuario = "";
         PanelReporte instance = new PanelReporte();
-        instance.GenerarReporteEstudianteBusqueda(usuario);
+        instance.GenerarReporteEstudianteBusqueda();
         // TODO review the generated test code and remove the default call to fail.
 
     }
@@ -82,6 +93,18 @@ public class PanelReporteTest {
         System.out.println("GenerarReporteDocente");
         PanelReporte instance = new PanelReporte();
         instance.GenerarReporteDocente();
+        // TODO review the generated test code and remove the default call to fail.
+
+    }
+
+    /**
+     * Test of GenerarReporteDocenteBusqueda method, of class PanelReporte.
+     */
+    @Test
+    public void testGenerarReporteDocenteBusqueda() {
+        System.out.println("GenerarReporteDocenteBusqueda");
+        PanelReporte instance = new PanelReporte();
+        instance.GenerarReporteDocenteBusqueda();
         // TODO review the generated test code and remove the default call to fail.
 
     }
